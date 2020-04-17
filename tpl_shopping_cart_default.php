@@ -60,7 +60,8 @@
      </tr>
          <!-- Loop through all products /-->
 <?php
-  $_SESSION['varname'] = $productArray;
+session_start();
+  $_SESSION['product'] = $productArray;
   foreach ($productArray as $product) {
 ?>
      <tr class="<?php echo $product['rowClass']; ?>">
