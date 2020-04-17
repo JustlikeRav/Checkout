@@ -129,20 +129,16 @@
 <div id="cartSubTotal"><?php echo SUB_TITLE_SUB_TOTAL; ?> <?php echo $cartShowTotal; ?></div>
 <br class="clearBoth" />
 
-<!--bof shopping cart buttons-->
-<div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CHECKOUT, BUTTON_CHECKOUT_ALT) . '</a>'; ?></div>
-<div class="buttonRow back"><?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_CONTINUE_SHOPPING, BUTTON_CONTINUE_SHOPPING_ALT) . '</a>'; ?></div>
-<?php
-// show update cart button
-  if (SHOW_SHOPPING_CART_UPDATE == 2 or SHOW_SHOPPING_CART_UPDATE == 3) {
-?>
-<div class="buttonRow back"><button class="button cartUpdate" type="submit"><i class="icon-refresh"></i> <?php echo TEXT_UPDATE; ?></button></div>
-<?php
-  } else { // don't show update button below cart
-?>
-<?php
-  } // show update button
-?>
+
+
+
+
+
+
+
+
+
+
 <!--eof shopping cart buttons-->
 </form>
 
@@ -229,5 +225,21 @@ while (!$show_display_shopping_cart_empty->EOF) {
 ?>
 <?php
   }
+?>
+
+
+<!--bof shopping cart buttons-->
+<div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CHECKOUT, BUTTON_CHECKOUT_ALT) . '</a>'; ?></div>
+<div class="buttonRow back"><?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_CONTINUE_SHOPPING, BUTTON_CONTINUE_SHOPPING_ALT) . '</a>'; ?></div>
+<?php
+// show update cart button
+  if (SHOW_SHOPPING_CART_UPDATE == 2 or SHOW_SHOPPING_CART_UPDATE == 3) {
+?>
+<div class="buttonRow back"><button class="button cartUpdate" type="submit"><i class="icon-refresh"></i> <?php echo TEXT_UPDATE; ?></button></div>
+<?php
+  } else { // don't show update button below cart
+?>
+<?php
+  } // show update button
 ?>
 </div>
