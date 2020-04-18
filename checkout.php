@@ -8,6 +8,7 @@ body {
   font-size: 17px;
   padding: 8px;
   background-color: black;
+  color: white;
 }
 
 * {
@@ -43,10 +44,15 @@ body {
   padding: 0 160px;
 }
 
+.image{
+text-align: center;
+margin-bottom: 10px;
+}
+
 .container {
-  background-color: #ccc;
+  background-color: #222;
   padding: 5px 20px 15px 20px;
-  border: 1px solid lightgrey;
+  border: 1px solid #444;
   border-radius: 3px;
 }
 
@@ -86,11 +92,11 @@ label {
 }
 
 a {
-  color: #333;
+  color: #ddd;
 }
 
 hr {
-  border: 1px solid lightgrey;
+  border: 1px solid #444;
 }
 
 span.price {
@@ -112,27 +118,29 @@ span.price {
       </style>
    </head>
    <body>
-      <img src="https://www.avenview.com/purchase/avenview.png" alt="Flowers in Chania" width="460" height="345">
       <div class="row">
          <div class="col-25">
+		 <div class="image">
+		 <img src="https://www.avenview.com/purchase/avenview.png" alt="Flowers in Chania" width="230" height="75">
+		 </div>
             <div class="container">
                <?php
                   $productPrices = explode("*", $_GET['productPrices']);
                   $productNames = explode("*", $_GET['productNames']);
                   
-                  echo '<h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>' . (count($productPrices) - 1) . '</b></span></h4>';
+                  echo '<h4>Cart <span class="price" style="color:#dedede"><i class="fa fa-shopping-cart"></i> <b>' . (count($productPrices) - 1) . '</b></span></h4>';
                   
                   for ($x = 0;$x <= count($productPrices);$x++)
                   {
                   
-                      echo "<p><a>" . $productNames[$x] . "</a> <span class='price'>" . $productPrices[$x] . "</span></p>";
+                      echo "<p><a>" . $productNames[$x] . "</a> <span style=\"color:#dedede\" class='price'>" . $productPrices[$x] . "</span></p>";
                   
                   }
                   
                   ?>
                <hr>
                <?php
-                  echo '<p>Total <span class="price" style="color:black"><b>' . $_GET['totalPrice'] . '</b></span></p>';
+                  echo '<p>Total <span class="price" style="color:#dedede"><b>' . $_GET['totalPrice'] . '</b></span></p>';
                   ?>
             </div>
          </div>

@@ -138,7 +138,7 @@
 	
   }
   
-  echo $productNames.$productPrices;
+  //echo $productNames.$productPrices;
   
   //echo count($productArray);
 ?>
