@@ -9,7 +9,7 @@ body {
   font-family: Arial;
   font-size: 17px;
   padding: 8px;
-  background-color: black;
+  background-color: #666;
   color: white;
 }
 
@@ -162,7 +162,7 @@ margin-bottom: 10px;
 	$totalPrice = str_replace("USD","",$totalPrice);
 	$totalPrice = str_replace("$","",$totalPrice);
 	
-	$totalPriceFloat = floatval("4651.65");
+	$totalPriceFloat = floatval($totalPrice);
 	
 		//echo floatval($string)
 		
@@ -185,7 +185,8 @@ margin-bottom: 10px;
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
                     // Show a success message to the buyer
-                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                    console.log(details.id + details.payer.email_address + details.payer.payer_id + details.payer.address + details.payer.name.given_name + details.payer.name.given_name);
+					location.replace('https://www.avenview.com/purchase/checkout.php?id='+ details.id +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.given_name +'')
                 });
             }
 
