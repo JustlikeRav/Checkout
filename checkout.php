@@ -156,8 +156,17 @@ margin-bottom: 10px;
 
     <!-- Include the PayPal JavaScript SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=AWQriKQnVBrhyNpsPkm9QHX5DzLRk4tNjAXloflAmghkji7tGY9QDZpuCaOZXUqaeLI6YepYfVx8qy2R&currency=USD"></script>
-
-    <script>
+	
+	<?php
+	$totalPrice = str_replace(",","",$_GET['totalPrice']);
+	$totalPrice = str_replace("USD","",$totalPrice);
+	$totalPrice = str_replace("$","",$totalPrice);
+	
+	$totalPriceFloat = floatval("4651.65");
+	
+		//echo floatval($string)
+		
+	echo "<script>
         // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
 
@@ -166,7 +175,7 @@ margin-bottom: 10px;
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '0.01'
+                            value: '".$totalPriceFloat."'
                         }
                     }]
                 });
@@ -182,7 +191,11 @@ margin-bottom: 10px;
 
 
         }).render('#paypal-button-container');
-    </script>
+    </script>";
+	
+	?>
+
+    
 		 </div>
          </div>
       </div>
