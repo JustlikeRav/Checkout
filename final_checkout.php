@@ -5,13 +5,11 @@
  <body>
  <?php 
  
- echo '<p>Hello World</p>';
- 
- session_start();
- 
- echo $_SESSION['product'];
- 
- 
+ echo $_GET['productPrices'];
+ echo $_GET['productNames'];
+ echo $_GET['totalPrice']; 
+
+
  ?> 
  
  
