@@ -129,7 +129,7 @@ margin-bottom: 10px;
       <div class="row">
          <div class="col-25">
 		 <div class="image">
-		 <img src="https://www.avenview.com/purchase/avenview.png" alt="Flowers in Chania" width="230" height="75">
+		 <img src="https://www.avenview.com/purchase/avenview.png" alt="Avenview Logo" width="230" height="75">
 		 </div>
             <div class="container">
                <?php
@@ -155,7 +155,7 @@ margin-bottom: 10px;
 		 <div id="paypal-button-container"></div>
 
     <!-- Include the PayPal JavaScript SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AWQriKQnVBrhyNpsPkm9QHX5DzLRk4tNjAXloflAmghkji7tGY9QDZpuCaOZXUqaeLI6YepYfVx8qy2R&currency=USD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=Afg8i2DaO7LJbQvEq2ijhCzp4PWnxdISyrwj2vP3bWTbMe0lHpskFxlkTv4lnnXBUd-fOqByb0Vs9tf3&currency=USD"></script>
 	
 	<?php
 	$totalPrice = str_replace(",","",$_GET['totalPrice']);
@@ -186,7 +186,7 @@ margin-bottom: 10px;
                 return actions.order.capture().then(function(details) {
                     // Show a success message to the buyer
                     console.log(details.id + details.payer.email_address + details.payer.payer_id + details.payer.address + details.payer.name.given_name + details.payer.name.given_name);
-					location.replace('https://www.avenview.com/purchase/checkout.php?id='+ details.id +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.given_name +'')
+					location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ details.id +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.given_name +'')
                 });
             }
 
