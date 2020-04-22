@@ -1,5 +1,11 @@
 <html dir="ltr">
 <head>
+<script>
+  window.fcWidget.init({
+    token: "39053606-0622-48f3-862a-e0ddabbbdc15",
+    host: "https://wchat.freshchat.com"
+  });
+</script>
 <title>HDMI Video Wall : Avenview</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -329,7 +335,7 @@ div-->
 <li class="dropdown pull-right"><a style="padding-top: 7px;" href="/index.php?main_page=contact_us" data-toggle="dropdown"><i class="icon-phone"></i><span> 866-508-0269</span></a></li>
     </ul>    
   </nav>   
-</div><div id="fc_frame" class=""><iframe id="fc_widget" name="fc_widget" title="Chat" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe></div><div id="fc_frame" class="fc-widget-small h-open-notify fc-open" style="max-height: 614px; height: 235px;"><iframe id="fc_widget" name="fc_widget" title="Chat" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe></div>
+</div>
 <a href="index.php?main_page=request_demo"><img class="hidden-phone hidden-tablet" alt="Request a Demo for Avenview products" style="position: fixed; top: 175px; z-index: 2; right:0px;" src="images/demo2.png" width="89.33" height="101.33"></a>
 <a href="index.php?main_page=dealers_application"><img class="hidden-phone hidden-tablet" alt="Fill out Avenview's dealer application to get exclusive prices" style="position: fixed; top: 284px; z-index: 1; right:0px;" src="images/dealer.png" width="89.33" height="101.33"></a>
 <!--<a href="//registration.experient-inc.com/showINF161/?FlowCode=ATTENDEE&Mkg=AVE175" target="_blank"><img class="hidden-phone hidden-tablet" alt="Visit Avenview's booth at Infocomm 2016 - Register Free here, Use VIP CODE: AVE175" style="position: fixed; top: 395px; z-index: 1; right: 1px;" src="images/infocomm16_z.png" width="101" height="282"></a>--> 
@@ -454,220 +460,17 @@ div-->
 <section id="mainSection" class="span9" role="main"><!--Main Content-->
 
 
-<?php
-				  
-	//if((!isset($_GET['totalPrice'])) || (!isset($_GET['productPrices'])) || (!isset($_GET['productNames']))){
-	//	echo '<script type="text/javascript">
-  //         window.location = "http://www.avenview.com/"
-   //   </script>';
-	//}
-?>
+<iframe id="myFrame" src="" style="height:650px;width:100%" frameborder="0"></iframe>
 
-<html>
-   <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <style>
-body {
-  font-family: Arial;
-  font-size: 17px;
-  padding: 8px;
-  background-color: #fff;
-  color: white;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.row {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  margin: 0 -16px;
-}
-
-.col-25 {
-  -ms-flex: 25%; /* IE10 */
-  flex: 25%;
-}
-
-.col-50 {
-  -ms-flex: 50%; /* IE10 */
-  flex: 50%;
-}
-
-.col-75 {
-  -ms-flex: 75%; /* IE10 */
-  flex: 75%;
-}
-
-.col-25,
-.col-50,
-.col-75 {
-  padding: 0 200px;
-}
-
-.image,
-.paypal{
-text-align: center;
-margin-bottom: 10px;
-}
-
-.container {
-  background-color: #222;
-  padding: 5px 20px 15px 20px;
-  border: 1px solid #444;
-  border-radius: 3px;
-}
-
-input[type=text] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-label {
-  margin-bottom: 10px;
-  display: block;
-}
-
-.icon-container {
-  margin-bottom: 20px;
-  padding: 7px 0;
-  font-size: 24px;
-}
-
-.btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  width: 100%;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 17px;
-}
-
-.btn:hover {
-  background-color: #45a049;
-}
-
-a {
-  color: #ddd;
-}
-
-hr {
-  border: 1px solid #444;
-}
-
-span.price {
-  float: right;
-  color: grey;
-}
-
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-@media (max-width: 800px) {
-  .row {
-    flex-direction: column-reverse;
-  }
-  .col-25,
-.col-50,
-.col-75 {
-  padding: 0 16px;
-}
-.image,
-.paypal{
-text-align: center;
-margin-bottom: 10px;
-}
-}
-      </style>
-   </head>
-   <body>
-      <div class="row">
-         <div class="col-25">
-		 <div class="image">
-		 <img src="https://www.avenview.com/purchase/avenview.jpg" alt="Avenview Logo" width="200" height="75" style="margin-bottom: 30px">
-		 </div>
-            <div class="container">
-               <?php
-                  $productPrices = explode("*", $_GET['productPrices']);
-                  $productNames = explode("*", $_GET['productNames']);
-                  
-                  echo '<h4>Cart <span class="price" style="color:#dedede"><i class="fa fa-shopping-cart"></i> <b>' . (count($productPrices) - 1) . '</b></span></h4>';
-                  
-                  for ($x = 0;$x <= count($productPrices);$x++)
-                  {
-                  
-                      echo "<p><a>" . $productNames[$x] . "</a> <span style=\"color:#dedede\" class='price'>" . $productPrices[$x] . "</span></p>";
-                  
-                  }
-                  
-                  ?>
-               <hr>
-               <?php
-                  echo '<p>Total <span class="price" style="color:#dedede"><b>' . $_GET['totalPrice'] . '</b></span></p>';
-                  ?>
-            </div>
-			<div class="paypal" style="margin-top:30px">
-		 <div id="paypal-button-container"></div>
-
-    <!-- Include the PayPal JavaScript SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=Afg8i2DaO7LJbQvEq2ijhCzp4PWnxdISyrwj2vP3bWTbMe0lHpskFxlkTv4lnnXBUd-fOqByb0Vs9tf3&currency=USD"></script>
-	
-	<?php
-	$totalPrice = str_replace(",","",$_GET['totalPrice']);
-	$totalPrice = str_replace("USD","",$totalPrice);
-	$totalPrice = str_replace("$","",$totalPrice);
-	
-	$totalPriceFloat = floatval($totalPrice);
-	
-		//echo floatval($string)
-		
-	echo "<script>
-        // Render the PayPal button into #paypal-button-container
-        paypal.Buttons({
-
-            // Set up the transaction
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '".$totalPriceFloat."'
-                        }
-                    }]
-                });
-            },
-
-            // Finalize the transaction
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    // Show a success message to the buyer
-                    console.log(details.id + details.payer.email_address + details.payer.payer_id + details.payer.address + details.payer.name.given_name + details.payer.name.given_name);
-					location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ details.id +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.given_name +'')
-                });
-            }
-
-
-        }).render('#paypal-button-container');
-    </script>";
-	
-	?>
-
-    
-		 </div>
-         </div>
-      </div>
-   </body>
-</html>
-
+<script>
+  var url_string = window.location.href;
+  var url = new URL(url_string);
+  var productPrices = url.searchParams.get("productPrices");
+  var productNames = url.searchParams.get("productNames");
+  var totalPrice = url.searchParams.get("totalPrice");
+  
+  document.getElementById("myFrame").src = "https://www.avenview.com/purchase/payment.php?productPrices="+productPrices+"&productNames="+productNames+"&totalPrice="+totalPrice;
+</script>
 
 </section><!--Main Content-->
 
@@ -1071,12 +874,6 @@ div-->
 <li class="main-links"><a href="index.php?main_page=faq_section" style="padding-top: 7px;"><span>FAQ</span></a></li>
 <li class="main-links"><a href="index.php?main_page=about_us" style="padding-top: 7px;"><span>About Us</span></a></li>
 <li class="main-links"><a href="index.php?main_page=contact_us" style="padding-top: 7px;"><span>Contact</span></a></li>
-<script>
-  window.fcWidget.init({
-    token: "39053606-0622-48f3-862a-e0ddabbbdc15",
-    host: "https://wchat.freshchat.com"
-  });
-</script>
       
 
       <li class="dropdown pull-right"><a style="padding-top: 7px;" href="https://www.avenview.com/index.php?main_page=shopping_cart" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-shopping-cart"></i><span> Cart</span></a>
@@ -1123,7 +920,7 @@ div-->
 <li class="dropdown pull-right"><a style="padding-top: 7px;" href="/index.php?main_page=contact_us" data-toggle="dropdown"><i class="icon-phone"></i><span> 866-508-0269</span></a></li>
     </ul>    
   </nav>   
-</div><div id="fc_frame" class="fc-widget-small h-open-notify fc-open" style="max-height: 614px; height: 235px;"><iframe id="fc_widget" name="fc_widget" title="Chat" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe></div>
+</div>
 <a href="index.php?main_page=request_demo"><img class="hidden-phone hidden-tablet" alt="Request a Demo for Avenview products" style="position: fixed; top: 175px; z-index: 2; right:0px;" src="images/demo2.png" width="89.33" height="101.33"></a>
 <a href="index.php?main_page=dealers_application"><img class="hidden-phone hidden-tablet" alt="Fill out Avenview's dealer application to get exclusive prices" style="position: fixed; top: 284px; z-index: 1; right:0px;" src="images/dealer.png" width="89.33" height="101.33"></a>
 <!--<a href="//registration.experient-inc.com/showINF161/?FlowCode=ATTENDEE&Mkg=AVE175" target="_blank"><img class="hidden-phone hidden-tablet" alt="Visit Avenview's booth at Infocomm 2016 - Register Free here, Use VIP CODE: AVE175" style="position: fixed; top: 395px; z-index: 1; right: 1px;" src="images/infocomm16_z.png" width="101" height="282"></a>--> 
@@ -1743,7 +1540,7 @@ div-->
 <li class="dropdown pull-right"><a style="padding-top: 7px;" href="/index.php?main_page=contact_us" data-toggle="dropdown"><i class="icon-phone"></i><span> 866-508-0269</span></a></li>
     </ul>    
   </nav>   
-</div><div id="fc_frame" class=""><iframe id="fc_widget" name="fc_widget" title="Chat" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe></div><div id="fc_frame" class="fc-widget-small h-open-notify fc-open" style="max-height: 614px; height: 235px;"><iframe id="fc_widget" name="fc_widget" title="Chat" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe></div>
+</div>
 <a href="index.php?main_page=request_demo"><img class="hidden-phone hidden-tablet" alt="Request a Demo for Avenview products" style="position: fixed; top: 175px; z-index: 2; right:0px;" src="images/demo2.png" width="89.33" height="101.33"></a>
 <a href="index.php?main_page=dealers_application"><img class="hidden-phone hidden-tablet" alt="Fill out Avenview's dealer application to get exclusive prices" style="position: fixed; top: 284px; z-index: 1; right:0px;" src="images/dealer.png" width="89.33" height="101.33"></a>
 <!--<a href="//registration.experient-inc.com/showINF161/?FlowCode=ATTENDEE&Mkg=AVE175" target="_blank"><img class="hidden-phone hidden-tablet" alt="Visit Avenview's booth at Infocomm 2016 - Register Free here, Use VIP CODE: AVE175" style="position: fixed; top: 395px; z-index: 1; right: 1px;" src="images/infocomm16_z.png" width="101" height="282"></a>--> 
@@ -1998,7 +1795,7 @@ pageTracker._trackPageLoadTime();
 </script>
 <div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><button id="cboxPrevious"></button><button id="cboxNext"></button><button id="cboxSlideshow"></button><div id="cboxLoadingOverlay" style="float: left;"></div><div id="cboxLoadingGraphic" style="float: left;"></div><button id="cboxClose"></button></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div><iframe scrolling="no" frameborder="0" allowtransparency="true" src="https://platform.twitter.com/widgets/widget_iframe.6787510241df65d128e2b60207ad4c25.html?origin=https%3A%2F%2Fwww.avenview.com" title="Twitter settings iframe" style="display: none;"></iframe><div id="fc_push_frame"><iframe id="fc_push" src="https://122690941663153.webpush.freshchat.com/index.html?ref=aHR0cHM6Ly93d3cuYXZlbnZpZXcuY29t" frameborder="0"></iframe></div><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe"></iframe>
 
-<title>HDMI Video Wall : Avenview</title>
+<title>Avenview</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="keywords" content="Video Converters and Scalers A/V Extenders Video Matrix Switches Rackmount Drawers Video Splitters Accessories, Cables &amp; Adapters Multi Viewers Video Wall ControlPro Software /Automation Control Presentation Switchers 4K Ultra HD HDMI 2.0 Discontinued Digital Signage digital singage, audio and video devices, hdmi extender, bidirectional ir, cat5 extender, video over ip, matrix switch, rack mount, splitters, convertors, twisted pair, 4k video and audio, receier, receiver, ultra hd display, video display HDMI Video Wall">
@@ -2325,7 +2122,7 @@ div-->
 <li class="dropdown pull-right"><a style="padding-top: 7px;" href="/index.php?main_page=contact_us" data-toggle="dropdown"><i class="icon-phone"></i><span> 866-508-0269</span></a></li>
     </ul>    
   </nav>   
-</div><div id="fc_frame" class="fc-widget-small h-open-notify fc-open" style="max-height: 614px; height: 235px;"><iframe id="fc_widget" name="fc_widget" title="Chat" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe></div>
+</div>
 <a href="index.php?main_page=request_demo"><img class="hidden-phone hidden-tablet" alt="Request a Demo for Avenview products" style="position: fixed; top: 175px; z-index: 2; right:0px;" src="images/demo2.png" width="89.33" height="101.33"></a>
 <a href="index.php?main_page=dealers_application"><img class="hidden-phone hidden-tablet" alt="Fill out Avenview's dealer application to get exclusive prices" style="position: fixed; top: 284px; z-index: 1; right:0px;" src="images/dealer.png" width="89.33" height="101.33"></a>
 <!--<a href="//registration.experient-inc.com/showINF161/?FlowCode=ATTENDEE&Mkg=AVE175" target="_blank"><img class="hidden-phone hidden-tablet" alt="Visit Avenview's booth at Infocomm 2016 - Register Free here, Use VIP CODE: AVE175" style="position: fixed; top: 395px; z-index: 1; right: 1px;" src="images/infocomm16_z.png" width="101" height="282"></a>--> 

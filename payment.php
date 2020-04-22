@@ -52,7 +52,7 @@ body {
 .col-25,
 .col-50,
 .col-75 {
-  padding: 0 200px;
+  padding: 0 70px;
 }
 
 .image,
