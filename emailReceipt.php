@@ -26,7 +26,7 @@ for ($x = 0;$x <= count($productPrices);$x++)
     
 }
 
-$emailReceipt = '<div dir="ltr">
+$emailTemplate = '<div dir="ltr">
   <div dir="ltr">
     <div dir="ltr">
       <div dir="ltr">
@@ -42,7 +42,7 @@ $emailReceipt = '<div dir="ltr">
                           <td id="gmail-BannerCol" height="82" valign="middle" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-color: rgb(216, 216, 216); padding-left: 20px;">
                             <h1 style="text-align: center; font-weight: normal; padding-left: 20px; padding-right: 20px;">
                               <div>
-                                <img src="https://www.avenview.com/purchase/avenview.png" width="263" height="85" style="margin-right: 5px;"> 
+                                <img src="avenview.png" width="263" height="85" style="margin-right: 5px;"> 
                                 <br>
                               </div>
                             </h1>
@@ -236,92 +236,6 @@ $emailReceipt = '<div dir="ltr">
   </div>
 </div>
 ';
+
+echo $emailTemplate;
 ?>
-
-<!DOCTYPE html>
-<html>
-<body>
-
-<div id="Box">
-            <div class="alert alert-success">
-                <strong>Payment Successful!<br>Receipt sent via Email</strong>
-            </div>
-			
-			<?php
-
-			echo '<dl class="dl-horizontal">
-			                <dt>Order ID</dt>
-			                <dd>'.$_GET['id'].'</dd>
-			                <dt>Buyer Name</dt>
-			                <dd>'.$_GET['name'].'</dd>
-			                <dt>Email Address</dt>
-			                <dd>'.$_GET['email'].'</dd>
-			            </dl>';
-			
-			?>
-</div>
-
-<?php
-// use wordwrap() if lines are longer than 70 characters
-$msg = wordwrap($emailReceipt,70);
-
-$to = "ravneet@avenview.com";
-$subject = "Purchase Receipt - Avenview Inc.";
-
-// Always set content-type when sending HTML email
-$headers = "MIME-Version: 1.0" . "\r\n";
-$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
-// More headers
-$headers .= 'From: Avenview Inc.<no-reply@avenview.com>' . "\r\n";
-$headers .= 'Bcc: ravneetsngh6@gmail.com' . "\r\n";
-
-// send email
-mail($to,$subject,$emailReceipt,$headers);
-?>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<style>
-        #Box {
-            width:400px;
-            color: black;
-            background: white;
-            text-align: center;
-            margin-left: auto;
-  			margin-right: auto;
-            margin-top: 40px;
-        }
-
-		body{
-        	background: white;
-        }
-		
-		button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-        
-        p {
-            width:200px;
-            margin-left: 40%;
-            display: block;
-        }
-
-        dl dt {
-            margin-left: 0;
-        }
-</style>
-
-</body>
-</html> 
