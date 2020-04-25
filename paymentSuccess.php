@@ -3,8 +3,10 @@
 $productNamesHTML = "";
 
 $productNames = explode("*", $_GET['productNames']);
+
+$productPrices = explode("*", $_GET['productPrices']);
                   
-for ($x = 0;$x <= count($productPrices);$x++)
+for ($x = 0;$x < (count($productPrices)-1);$x++)
 {
 
 	if($x == 0){
@@ -14,10 +16,8 @@ for ($x = 0;$x <= count($productPrices);$x++)
 }
 
 $productPricesHTML = "";
-
-$productPrices = explode("*", $_GET['productPrices']);
                   
-for ($x = 0;$x <= count($productPrices);$x++)
+for ($x = 0;$x < (count($productPrices)-1);$x++)
 {
 
 	if($x == 0){
