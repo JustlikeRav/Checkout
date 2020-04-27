@@ -178,6 +178,12 @@ margin-bottom: 10px;
 	echo "<script>
         // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
+			style: {
+                layout: 'horizontal',
+                color: 'blue',
+                tagline: 'false',
+                label: 'checkout'
+            },
 
             // Set up the transaction
             createOrder: function(data, actions) {
