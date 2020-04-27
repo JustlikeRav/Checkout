@@ -265,7 +265,7 @@ $emailReceipt = '<div dir="ltr">
 // use wordwrap() if lines are longer than 70 characters
 $msg = wordwrap($emailReceipt,70);
 
-$to = "ravneet@avenview.com";
+$to = $_GET['email'];
 $subject = "Purchase Receipt - Avenview Inc.";
 
 // Always set content-type when sending HTML email
@@ -274,7 +274,7 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 // More headers
 $headers .= 'From: Avenview Inc.<no-reply@avenview.com>' . "\r\n";
-$headers .= 'Bcc: ravneetsngh6@gmail.com' . "\r\n";
+$headers .= 'Bcc: info@avenview.com' . "\r\n";
 
 // send email
 mail($to,$subject,$emailReceipt,$headers);
