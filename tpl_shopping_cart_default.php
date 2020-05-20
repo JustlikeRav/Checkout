@@ -25,6 +25,48 @@
   }
 ?>
 
+<style>
+
+.box select {
+  background-color: #dd0000;
+  color: white;
+  padding: 10px;
+  width: 250px;
+  border: none;
+  font-size: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+.box::before {
+  content: "\f13a";
+  font-family: FontAwesome;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 23px;
+  line-height: 40px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.box:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+  padding: 10px;
+}
+
+</style>
+
 <h1 id="cartDefaultHeading"><?php echo HEADING_TITLE; ?></h1>
 
 <?php if ($messageStack->size('shopping_cart') > 0) echo $messageStack->output('shopping_cart'); ?>
@@ -146,6 +188,25 @@
       </table>
 
 <div id="cartSubTotal"><?php echo SUB_TITLE_SUB_TOTAL; ?> <?php echo $cartShowTotal; ?></div>
+
+
+<label for="country">Country</label><span style="color: red !important; display: inline; float: none;">*</span>      
+        
+            <div class="box">
+  <select id="country" name="country" class="form-control">
+                <option value="US">United States</option>
+                <option value="CA">Canada</option>
+                <option value="EU">European Union</option>
+                <option value="MX">Mexico</option>
+                <option value="PL">Poland</option>
+                <option value="PR">Puerto Rico</option>
+                <option value="X">All other Countries or Territories</option>
+            </select>
+</div>
+			
+			</br>
+
+
 <br class="clearBoth" />
 
 <!--bof shopping cart buttons-->

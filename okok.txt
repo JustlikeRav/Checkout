@@ -3,3 +3,7 @@
 5197 3198 8240 1827
 04 / 20
 370
+
+productNames=AVSignCloud%20-%204K%20Digital%20Signage%20Player*&productPrices=$800.00USD*&totalPrice=$800.00USD
+
+https://www.avenview.com/deleteASAP/shipping.php?country=US&weight=0.5&zipcode=72201
