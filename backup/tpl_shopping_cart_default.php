@@ -27,43 +27,42 @@
 
 <style>
 
-label {font-family: Arial, Helvetica, sans-serif;}
-
-input[type=text], select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: vertical;
+.box select {
+  background-color: #dd0000;
+  color: white;
+  padding: 10px;
+  width: 250px;
+  border: none;
+  font-size: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
 }
 
-.checkout {
-  background-color: #ee0000;
-  border: none;
-  color: white;
-  padding: 15px 32px;
+.box::before {
+  content: "\f13a";
+  font-family: FontAwesome;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+  font-size: 23px;
+  line-height: 40px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
 }
 
-.checkout:hover {
-  background-color: #cc0000;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+.box:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+  padding: 10px;
 }
 
 </style>
@@ -188,22 +187,9 @@ input[type=text], select, textarea {
        <!-- Finished loop through all products /-->
       </table>
 
- <label for="country">Country</label>
-    <select id="country" name="country" class="form-control">
-    			<option value="Z">Select Country</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="EU">European Union</option>
-                <option value="MX">Mexico</option>
-                <option value="PL">Poland</option>
-                <option value="PR">Puerto Rico</option>
-                <option value="X">All other Countries or Territories</option>
-            </select>
-    
-    <label for="fname">Zipcode/Pincode</label>
-    <input type="text" id="fname" name="firstname" placeholder="Enter Zipcode/Pincode">
-
-    <button class="checkout">Checkout</button>
+<div id="cartSubTotal"><?php echo SUB_TITLE_SUB_TOTAL; ?> <?php echo $cartShowTotal; ?></div>    
+        
+           
 			
 			</br>
 
