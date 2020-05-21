@@ -173,7 +173,6 @@ input[type=text], select, textarea {
   
   $productNames;
   $productPrices;
-  
   foreach ($productArray as $product) {
   
     $productNames = $productNames.$product['productsName']."*";
@@ -201,9 +200,36 @@ input[type=text], select, textarea {
             </select>
     
     <label for="fname">Zipcode/Pincode</label>
-    <input type="text" id="fname" name="firstname" placeholder="Enter Zipcode/Pincode">
+    <input type="text" id="zipcode" name="pincode" placeholder="Enter Zipcode/Pincode">
 
-    <button class="checkout">Checkout</button>
+    <button onclick="checkoutNow()" class="checkout">Checkout</button>
+	
+	<?php 
+	
+	$lol = explode (" ", $totalsDisplay);
+	$weight = substr($lol[3], 0, -22);
+	?>
+	
+	
+	<script>
+function checkoutNow() {
+var e = document.getElementById("country");
+var country = e.options[e.selectedIndex].value;
+var zipcode = document.getElementById("zipcode").value;
+
+var weight = "<?php echo $weight ?>";
+var productNames = "<?php echo $productNames ?>";
+var productPrices = "<?php echo $productPrices ?>";
+var cartShowTotal = "<?php echo $cartShowTotal ?>";
+
+if((country == "Z") || (zipcode == "")){
+	alert("Please select Country & Zipcode");
+} else {
+alert("<?php echo $weight ?>");
+}
+	
+}
+</script>
 			
 			</br>
 
@@ -228,15 +254,7 @@ input[type=text], select, textarea {
 </form>
 
 <br class="clearBoth" />
-<?php
-    if (SHOW_SHIPPING_ESTIMATOR_BUTTON == '1') {
-?>
 
-<div class="buttonRow back visible-desktop"><?php echo '<a href="javascript:popupWindow(\'' . zen_href_link(FILENAME_POPUP_SHIPPING_ESTIMATOR) . '\')">' .
- zen_image_button(BUTTON_IMAGE_SHIPPING_ESTIMATOR, BUTTON_SHIPPING_ESTIMATOR_ALT) . '</a>'; ?></div>
-<?php
-    }
-?>
 
 <!-- ** BEGIN PAYPAL EXPRESS CHECKOUT ** -->
 <?php  // the tpl_ec_button template only displays EC option if cart contents >0 and value >0
@@ -252,7 +270,6 @@ if (defined('MODULE_PAYMENT_PAYPALWPP_STATUS') && MODULE_PAYMENT_PAYPALWPP_STATU
  * load the shipping estimator code if needed
  */
 ?>
-      <div class="visible-desktop"><?php require(DIR_WS_MODULES . zen_get_module_directory('shipping_estimator.php')); ?></div>
 
 <?php
       }
