@@ -466,8 +466,9 @@ div-->
   var productPrices = url.searchParams.get("productPrices");
   var productNames = url.searchParams.get("productNames");
   var totalPrice = url.searchParams.get("totalPrice");
+  var weight = url.searchParams.get("weight");
   
-  document.getElementById("myFrame").src = "https://www.avenview.com/purchase/payment.php?productPrices="+productPrices+"&productNames="+productNames+"&totalPrice="+totalPrice;
+  document.getElementById("myFrame").src = "https://www.avenview.com/purchase/payment.php?productPrices="+productPrices+"&productNames="+productNames+"&totalPrice="+totalPrice+"&weight="+weight;
 </script>
 
 </section><!--Main Content-->
@@ -1208,8 +1209,9 @@ div-->
   var productPrices = url.searchParams.get("productPrices");
   var productNames = url.searchParams.get("productNames");
   var totalPrice = url.searchParams.get("totalPrice");
+  var weight = url.searchParams.get("weight");
   
-  document.getElementById("myFrame").src = "https://www.avenview.com/purchase/payment.php?productPrices="+productPrices+"&productNames="+productNames+"&totalPrice="+totalPrice;
+  document.getElementById("myFrame").src = "https://www.avenview.com/purchase/payment.php?productPrices="+productPrices+"&productNames="+productNames+"&totalPrice="+totalPrice+"&weight="+weight;
 </script>
 
 </section><!--Main Content-->

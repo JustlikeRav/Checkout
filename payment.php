@@ -13,6 +13,16 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
+  
+    CURLOPT_POSTFIELDS =>"{\n  \"carrier_ids\": [\n    \"se-248578\"\n  ],\n  \"from_country_code\": \"US\",\n  \"from_postal_code\": \"78756\",\n  \"to_country_code\": \"US\",\n  \"to_postal_code\": \"90002\",\n  \"weight\": {\n    \"value\": ".$weight_oz.",\n    \"unit\": \"ounce\"\n  },\n  \"dimensions\": {\n    \"unit\": \"inch\",\n    \"length\": 15.0,\n    \"width\": 15.0,\n    \"height\": 10.0\n  },\n  \"confirmation\": \"none\",\n  \"address_residential_indicator\": \"no\"\n}",
+  CURLOPT_HTTPHEADER => array(
+    "Host: api.shipengine.com",
+    "API-Key: TEST_SB8LmMvXdJSaNK/S5payf7xun9IjhUQaXmPsX/sz+ZM",
+    "Content-Type: application/json"
+  ),
+));
+  
+  /*
   CURLOPT_POSTFIELDS =>"{\n  \"carrier_ids\": [\n    \"se-248578\"\n  ],\n  \"from_country_code\": \"US\",\n  \"from_postal_code\": \"78756\",\n  \"to_country_code\": \"".$_GET['country']."\",\n  \"to_postal_code\": \"".$_GET['zipcode']."\",\n  \"weight\": {\n    \"value\": ".$weight_oz.",\n    \"unit\": \"ounce\"\n  },\n  \"dimensions\": {\n    \"unit\": \"inch\",\n    \"length\": 15.0,\n    \"width\": 15.0,\n    \"height\": 10.0\n  },\n  \"confirmation\": \"none\",\n  \"address_residential_indicator\": \"no\"\n}",
   CURLOPT_HTTPHEADER => array(
     "Host: api.shipengine.com",
@@ -20,6 +30,7 @@ curl_setopt_array($curl, array(
     "Content-Type: application/json"
   ),
 ));
+*/
 
 $response = curl_exec($curl);
 
@@ -36,12 +47,12 @@ foreach($arr as $key=>$value){
 	$shippingOptionsString .= '<tr>
              <td>
                  <div class="radio">
-                     <label><input type="radio" onclick="shipping_change('.$i.');" name="optradio">$'.$value['shipping_amount']['amount'].' USD</label>
+                     <label><input type="radio" class="'.$i.'" value="'.$value['shipping_amount']['amount'].'" onclick="shipping_change('.$i.');" name="optradio">$'.$value['shipping_amount']['amount'].' USD</label>
                  </div>
              </td>
              <td>
              <div class="radiotext">
-                 <label for="regular">'.$value['service_type'].'</label>
+                 <label class="'.$i.'" value="'.$value['service_type'].'" for="regular">'.$value['service_type'].'</label>
              </div>
              </td>
          </tr>';
@@ -59,9 +70,26 @@ foreach($arr as $key=>$value){
 	  <link rel="stylesheet" type="text/css" href="payment.css">
 	  <script src="jQuery/jquery-2.1.3.min.js" type="text/javascript"></script>
 	  <script>
+	  
+	  window.onload = function() {
+		  var defaultShippingCost = document.getElementById("shipping_amount").getAttribute("value");
+		  document.getElementById("total_cost").innerHTML = "$" + (parseFloat(defaultShippingCost) + totalPrice) + "USD";
+		  var currentPricewithShipping = (parseFloat(defaultShippingCost) + totalPrice);
+		};
+		
+		var totalPrice = "<?php echo $_GET['totalPrice'] ?>";
+		totalPrice = totalPrice.substring(0, totalPrice.length - 3);
+		totalPrice = totalPrice.substr(1);
+		totalPrice = parseFloat(totalPrice.replace(/,/g, ''));
 
-		function shipping_change(lol) {
-		    console.log(lol);
+		function shipping_change(index) {
+			
+			var x = document.getElementsByClassName(index.toString());
+			
+			document.getElementById("shipping_type").innerHTML = x[1].getAttribute("value") + " (Shipping Cost)";
+			document.getElementById("shipping_amount").innerHTML = "$" + x[0].getAttribute("value") + "USD";
+			document.getElementById("total_cost").innerHTML = "$" + (parseFloat(x[0].getAttribute("value")) + totalPrice) + "USD";
+			currentPricewithShipping = (parseFloat(x[0].getAttribute("value")) + totalPrice);
 		}
 		
 		</script>
@@ -85,12 +113,12 @@ foreach($arr as $key=>$value){
                       echo "<p><a>" . $productNames[$x] . "</a> <span style=\"color:#dedede\" class='price'>" . $productPrices[$x] . "</span></p>";
                   }
 				  
-				  echo "<p><a>" . $arr[0]['service_type']. " (Shipping Cost)</a> <span style=\"color:#dedede\" class='price'>$" . $arr[0]['shipping_amount']['amount'] . " USD	</span></p>";
+				  echo "<p><a id='shipping_type'>" . $arr[3]['service_type']. " (Shipping Cost)</a> <span style=\"color:#dedede\" value=".$arr[3]['shipping_amount']['amount']." id='shipping_amount' class='price'>$" . $arr[3]['shipping_amount']['amount'] . " USD	</span></p>";
                   
                   ?>
                <hr>
                <?php
-                  echo '<p>Total <span class="price" style="color:#dedede"><b>' . $_GET['totalPrice'] . '</b></span></p>';
+                  echo '<p>Total <span class="price" id="total_cost" style="color:#dedede"><b>' . $_GET['totalPrice'] . '</b></span></p>';
                   ?>
             </div>
 			<div class="paypal" style="margin-top:30px">
@@ -128,6 +156,7 @@ foreach($arr as $key=>$value){
 		
 	echo "<script>
         // Render the PayPal button into #paypal-button-container
+		
         paypal.Buttons({
 			style: {
                 layout: 'horizontal',
@@ -138,10 +167,17 @@ foreach($arr as $key=>$value){
 
             // Set up the transaction
             createOrder: function(data, actions) {
+			var finalShippingcost = document.getElementById('total_cost').innerHTML;
+			
+		finalShippingcost = finalShippingcost.substring(0, finalShippingcost.length - 3);
+		finalShippingcost = finalShippingcost.substr(1);
+		finalShippingcost = parseFloat(finalShippingcost.replace(/,/g, ''));
+			
+			
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '".$totalPriceFloat."'
+                            value: finalShippingcost
                         }
                     }]
                 });
@@ -152,7 +188,7 @@ foreach($arr as $key=>$value){
                 return actions.order.capture().then(function(details) {
                     // Show a success message to the buyer
 					console.log(details);
-					location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ details.id +'&time='+ details.create_time +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.surname +'&productPrices=".$_GET['productPrices']."&productNames=".$_GET['productNames']."&totalPrice=".$_GET['totalPrice']."')
+					location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ details.id +'&time='+ details.create_time +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address + '&totalPrice='+currentPricewithShipping +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.surname +'&productPrices=".$_GET['productPrices']."&productNames=".$_GET['productNames']."')
                 });
             }
 
