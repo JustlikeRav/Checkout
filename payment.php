@@ -1,145 +1,94 @@
 <?php
-				  
-	//if((!isset($_GET['totalPrice'])) || (!isset($_GET['productPrices'])) || (!isset($_GET['productNames']))){
-	//	echo '<script type="text/javascript">
-  //         window.location = "http://www.avenview.com/"
-   //   </script>';
-	//}
+
+$curl = curl_init();
+
+$weight_oz = ((float) $_GET['weight'])*16;
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "https://api.shipengine.com/v1/rates/estimate",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_POSTFIELDS =>"{\n  \"carrier_ids\": [\n    \"se-248578\"\n  ],\n  \"from_country_code\": \"US\",\n  \"from_postal_code\": \"78756\",\n  \"to_country_code\": \"".$_GET['country']."\",\n  \"to_postal_code\": \"".$_GET['zipcode']."\",\n  \"weight\": {\n    \"value\": ".$weight_oz.",\n    \"unit\": \"ounce\"\n  },\n  \"dimensions\": {\n    \"unit\": \"inch\",\n    \"length\": 15.0,\n    \"width\": 15.0,\n    \"height\": 10.0\n  },\n  \"confirmation\": \"none\",\n  \"address_residential_indicator\": \"no\"\n}",
+  CURLOPT_HTTPHEADER => array(
+    "Host: api.shipengine.com",
+    "API-Key: TEST_SB8LmMvXdJSaNK/S5payf7xun9IjhUQaXmPsX/sz+ZM",
+    "Content-Type: application/json"
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+
+$arr = json_decode($response, true);
+
+$shippingOptionsString = '';
+
+foreach($arr as $key=>$value){
+
+	echo print_r($value['shipping_amount']['amount'].' -> '.$value['service_type']);
+	
+	$shippingOptionsString .= '<tr>
+             <td>
+                 <div class="radio">
+                     <label><input type="radio" id="regular" name="optradio">15'.$value['shipping_amount']['amount'].' USD</label>
+                 </div>
+             </td>
+             <td>
+             <div class="radiotext">
+                 <label for="regular">'.$value['service_type'].'</label>
+             </div>
+             </td>
+         </tr>';
+		 
+		 
+}
 ?>
 
 <html>
    <head>
       <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <style>
-body {
-  font-family: Arial;
-  font-size: 17px;
-  padding: 8px;
-  background-color: #fff;
-  color: white;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.row {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  margin: 0 -16px;
-}
-
-.col-25 {
-  -ms-flex: 25%; /* IE10 */
-  flex: 25%;
-}
-
-.col-50 {
-  -ms-flex: 50%; /* IE10 */
-  flex: 50%;
-}
-
-.col-75 {
-  -ms-flex: 75%; /* IE10 */
-  flex: 75%;
-}
-
-.col-25,
-.col-50,
-.col-75 {
-  padding: 0 70px;
-}
-
-.image,
-.paypal{
-text-align: center;
-margin-bottom: 10px;
-}
-
-.container {
-  background-color: #222;
-  padding: 5px 20px 15px 20px;
-  border: 1px solid #444;
-  border-radius: 3px;
-}
-
-input[type=text] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-label {
-  margin-bottom: 10px;
-  display: block;
-}
-
-.icon-container {
-  margin-bottom: 20px;
-  padding: 7px 0;
-  font-size: 24px;
-}
-
-.btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  width: 100%;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 17px;
-}
-
-.btn:hover {
-  background-color: #45a049;
-}
-
-a {
-  color: #ddd;
-}
-
-hr {
-  border: 1px solid #444;
-}
-
-span.price {
-  float: right;
-  color: grey;
-}
-
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-@media (max-width: 800px) {
-  .row {
-    flex-direction: column-reverse;
-  }
-  .col-25,
-.col-50,
-.col-75 {
-  padding: 0 16px;
-}
-.image,
-.paypal{
-text-align: center;
-margin-bottom: 10px;
-}
-}
-      </style>
+	  <link rel="stylesheet" type="text/css" href="payment.css">
+	  
+	  
+	  
    </head>
    <body>
       <div class="row">
          <div class="col-25">
 		 <div class="image">
 		 <img src="https://www.avenview.com/purchase/avenview.jpg" alt="Avenview Logo" width="200" height="75" style="margin-bottom: 30px">
+		 
+	<?php
+	
+	echo '<table id="customers" class="table table-responsive">
+     <thead>
+         <tr>
+             <th>Price</th>
+             <th>Service</th>
+         </tr>
+     </thead>
+     <tbody>
+     <form id="shipping_cost_form">
+         '.$shippingOptionsString.'
+         </form>
+         </tbody>
+</table>';
+	
+	?>	 
+		 
 		 </div>
+		 
+		 
+		 
             <div class="container">
                <?php
                   $productPrices = explode("*", $_GET['productPrices']);
