@@ -29,14 +29,14 @@ $arr = json_decode($response, true);
 
 $shippingOptionsString = '';
 
-foreach($arr as $key=>$value){
+$i = 0;
 
-	echo print_r($value['shipping_amount']['amount'].' -> '.$value['service_type']);
+foreach($arr as $key=>$value){
 	
 	$shippingOptionsString .= '<tr>
              <td>
                  <div class="radio">
-                     <label><input type="radio" id="regular" name="optradio">15'.$value['shipping_amount']['amount'].' USD</label>
+                     <label><input type="radio" onclick="shipping_change('.$i.');" id="regular" name="optradio">$'.$value['shipping_amount']['amount'].' USD</label>
                  </div>
              </td>
              <td>
@@ -46,7 +46,7 @@ foreach($arr as $key=>$value){
              </td>
          </tr>';
 		 
-		 
+		 $i++;
 }
 ?>
 
@@ -58,16 +58,48 @@ foreach($arr as $key=>$value){
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	  <link rel="stylesheet" type="text/css" href="payment.css">
 	  
-	  
+	  <script>
+
+		var jsonResponse = "<?php echo $response ?>";
+		var obj = JSON.parse(jsonResponse);
+
+		function shipping_change(var index) {
+		    alert(obj[index].service_type);
+		}
+		
+		</script>
 	  
    </head>
    <body>
       <div class="row">
          <div class="col-25">
-		 <div class="image">
-		 <img src="https://www.avenview.com/purchase/avenview.jpg" alt="Avenview Logo" width="200" height="75" style="margin-bottom: 30px">
+		 <div class="image"> 
 		 
-	<?php
+		 </div>
+            <div class="container">
+               <?php
+                  $productPrices = explode("*", $_GET['productPrices']);
+                  $productNames = explode("*", $_GET['productNames']);
+                  
+                  echo '<h4>Cart <span class="price" style="color:#dedede"><i class="fa fa-shopping-cart"></i> <b>' . (count($productPrices) - 1) . '</b></span></h4>';
+                  
+                  for ($x = 0;$x <= count($productPrices);$x++)
+                  {
+                      echo "<p><a>" . $productNames[$x] . "</a> <span style=\"color:#dedede\" class='price'>" . $productPrices[$x] . "</span></p>";
+                  }
+				  
+				  echo "<p><a>" . $arr[0]['service_type']. " (Shipping Cost)</a> <span style=\"color:#dedede\" class='price'>$" . $arr[0]['shipping_amount']['amount'] . " USD	</span></p>";
+                  
+                  ?>
+               <hr>
+               <?php
+                  echo '<p>Total <span class="price" style="color:#dedede"><b>' . $_GET['totalPrice'] . '</b></span></p>';
+                  ?>
+            </div>
+			<div class="paypal" style="margin-top:30px">
+		 <div id="paypal-button-container"></div> </br></br>
+		 
+		 <?php
 	
 	echo '<table id="customers" class="table table-responsive">
      <thead>
@@ -83,34 +115,7 @@ foreach($arr as $key=>$value){
          </tbody>
 </table>';
 	
-	?>	 
-		 
-		 </div>
-		 
-		 
-		 
-            <div class="container">
-               <?php
-                  $productPrices = explode("*", $_GET['productPrices']);
-                  $productNames = explode("*", $_GET['productNames']);
-                  
-                  echo '<h4>Cart <span class="price" style="color:#dedede"><i class="fa fa-shopping-cart"></i> <b>' . (count($productPrices) - 1) . '</b></span></h4>';
-                  
-                  for ($x = 0;$x <= count($productPrices);$x++)
-                  {
-                  
-                      echo "<p><a>" . $productNames[$x] . "</a> <span style=\"color:#dedede\" class='price'>" . $productPrices[$x] . "</span></p>";
-                  
-                  }
-                  
-                  ?>
-               <hr>
-               <?php
-                  echo '<p>Total <span class="price" style="color:#dedede"><b>' . $_GET['totalPrice'] . '</b></span></p>';
-                  ?>
-            </div>
-			<div class="paypal" style="margin-top:30px">
-		 <div id="paypal-button-container"></div>
+	?>	
 
     <!-- Include the PayPal JavaScript SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=Afg8i2DaO7LJbQvEq2ijhCzp4PWnxdISyrwj2vP3bWTbMe0lHpskFxlkTv4lnnXBUd-fOqByb0Vs9tf3&currency=USD"></script>
