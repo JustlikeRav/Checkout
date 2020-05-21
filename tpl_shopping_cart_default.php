@@ -225,7 +225,10 @@ var cartShowTotal = "<?php echo $cartShowTotal ?>";
 if((country == "Z") || (zipcode == "")){
 	alert("Please select Country & Zipcode");
 } else {
-alert("<?php echo $weight ?>");
+
+window.open('https://www.avenview.com/purchase/checkout.php?productNames='.concat(productNames,'&productPrices=',productPrices,'&totalPrice=',cartShowTotal,'&country=',country,'&zipcode=',zipcode,'&weight=',weight));
+
+window.close();
 }
 	
 }
@@ -237,7 +240,7 @@ alert("<?php echo $weight ?>");
 <br class="clearBoth" />
 
 <!--bof shopping cart buttons-->
-<div class="buttonRow forward"><?php echo '<a href="https://www.avenview.com/purchase/checkout.php?productNames='.$productNames.'&productPrices='.$productPrices.'&totalPrice='.$cartShowTotal.'">' . zen_image_button(BUTTON_IMAGE_CHECKOUT, BUTTON_CHECKOUT_ALT) . '</a>'; ?></div>
+<div hidden class="buttonRow forward"><?php echo '<a href="https://www.avenview.com/purchase/checkout.php?productNames='.$productNames.'&productPrices='.$productPrices.'&totalPrice='.$cartShowTotal.'">' . zen_image_button(BUTTON_IMAGE_CHECKOUT, BUTTON_CHECKOUT_ALT) . '</a>'; ?></div>
 <div class="buttonRow back"><?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_CONTINUE_SHOPPING, BUTTON_CONTINUE_SHOPPING_ALT) . '</a>'; ?></div>
 <?php
 // show update cart button
