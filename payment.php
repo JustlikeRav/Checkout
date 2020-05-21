@@ -36,7 +36,7 @@ foreach($arr as $key=>$value){
 	$shippingOptionsString .= '<tr>
              <td>
                  <div class="radio">
-                     <label><input type="radio" onclick="shipping_change('.$i.');" id="regular" name="optradio">$'.$value['shipping_amount']['amount'].' USD</label>
+                     <label><input type="radio" onclick="shipping_change('.$i.');" name="optradio">$'.$value['shipping_amount']['amount'].' USD</label>
                  </div>
              </td>
              <td>
@@ -57,14 +57,11 @@ foreach($arr as $key=>$value){
     	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	  <link rel="stylesheet" type="text/css" href="payment.css">
-	  
+	  <script src="jQuery/jquery-2.1.3.min.js" type="text/javascript"></script>
 	  <script>
 
-		var jsonResponse = "<?php echo $response ?>";
-		var obj = JSON.parse(jsonResponse);
-
-		function shipping_change(var index) {
-		    alert(obj[index].service_type);
+		function shipping_change(lol) {
+		    console.log(lol);
 		}
 		
 		</script>
