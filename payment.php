@@ -73,8 +73,7 @@ foreach($arr as $key=>$value){
 	  
 	  window.onload = function() {
 		  var defaultShippingCost = document.getElementById("shipping_amount").getAttribute("value");
-		  document.getElementById("total_cost").innerHTML = "$" + (parseFloat(defaultShippingCost) + totalPrice) + "USD";
-		  var currentPricewithShipping = (parseFloat(defaultShippingCost) + totalPrice);
+		  document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(defaultShippingCost) + totalPrice))).toFixed(2) + "USD";
 		};
 		
 		var totalPrice = "<?php echo $_GET['totalPrice'] ?>";
@@ -88,8 +87,7 @@ foreach($arr as $key=>$value){
 			
 			document.getElementById("shipping_type").innerHTML = x[1].getAttribute("value") + " (Shipping Cost)";
 			document.getElementById("shipping_amount").innerHTML = "$" + x[0].getAttribute("value") + "USD";
-			document.getElementById("total_cost").innerHTML = "$" + (parseFloat(x[0].getAttribute("value")) + totalPrice) + "USD";
-			currentPricewithShipping = (parseFloat(x[0].getAttribute("value")) + totalPrice);
+			document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(x[0].getAttribute("value")) + totalPrice))).toFixed(2) + "USD";
 		}
 		
 		</script>
@@ -169,10 +167,9 @@ foreach($arr as $key=>$value){
             createOrder: function(data, actions) {
 			var finalShippingcost = document.getElementById('total_cost').innerHTML;
 			
-		finalShippingcost = finalShippingcost.substring(0, finalShippingcost.length - 3);
-		finalShippingcost = finalShippingcost.substr(1);
-		finalShippingcost = parseFloat(finalShippingcost.replace(/,/g, ''));
-			
+			finalShippingcost = finalShippingcost.substring(0, finalShippingcost.length - 3);
+			finalShippingcost = finalShippingcost.substr(1);
+			finalShippingcost = parseFloat(finalShippingcost.replace(/,/g, ''));
 			
                 return actions.order.create({
                     purchase_units: [{
