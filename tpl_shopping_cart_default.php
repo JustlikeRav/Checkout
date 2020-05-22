@@ -201,8 +201,6 @@ input[type=text], select, textarea {
     
     <label for="fname">Zipcode/Pincode</label>
     <input type="text" id="zipcode" name="pincode" placeholder="Enter Zipcode/Pincode">
-
-    <button onclick="checkoutNow()" class="checkout">Checkout</button>
 	
 	<?php 
 	
@@ -226,21 +224,20 @@ if((country == "Z") || (zipcode == "")){
 	alert("Please select Country & Zipcode");
 } else {
 
-window.open('https://www.avenview.com/purchase/checkout.php?productNames='.concat(productNames,'&productPrices=',productPrices,'&totalPrice=',cartShowTotal,'&country=',country,'&zipcode=',zipcode,'&weight=',weight));
+window.location.href = 'https://www.avenview.com/purchase/checkout.php?productNames='.concat(productNames,'&productPrices=',productPrices,'&totalPrice=',cartShowTotal,'&country=',country,'&zipcode=',zipcode,'&weight=',weight);
 
-window.close();
 }
 	
 }
 </script>
 			
-			</br>
-
+</br>
 
 <br class="clearBoth" />
 
 <!--bof shopping cart buttons-->
-<div hidden class="buttonRow forward"><?php echo '<a href="https://www.avenview.com/purchase/checkout.php?productNames='.$productNames.'&productPrices='.$productPrices.'&totalPrice='.$cartShowTotal.'">' . zen_image_button(BUTTON_IMAGE_CHECKOUT, BUTTON_CHECKOUT_ALT) . '</a>'; ?></div>
+<div class="buttonRow forward"><?php echo '<a onclick="checkoutNow()">' . zen_image_button(BUTTON_IMAGE_CHECKOUT, BUTTON_CHECKOUT_ALT) . '</a>'; ?></div>
+
 <div class="buttonRow back"><?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_CONTINUE_SHOPPING, BUTTON_CONTINUE_SHOPPING_ALT) . '</a>'; ?></div>
 <?php
 // show update cart button
