@@ -38,6 +38,10 @@ curl_close($curl);
 
 $arr = json_decode($response, true);
 
+usort($arr, function($a, $b) {
+    return $a['shipping_amount']['amount'] <=> $b['shipping_amount']['amount'];
+});
+
 $shippingOptionsString = '';
 
 $i = 0;
