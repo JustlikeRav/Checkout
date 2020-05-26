@@ -1,144 +1,103 @@
 <?php
-				  
-	//if((!isset($_GET['totalPrice'])) || (!isset($_GET['productPrices'])) || (!isset($_GET['productNames']))){
-	//	echo '<script type="text/javascript">
-  //         window.location = "http://www.avenview.com/"
-   //   </script>';
-	//}
+
+$curl = curl_init();
+
+$weight_oz = ((float) $_GET['weight'])*16;
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "https://api.shipengine.com/v1/rates/estimate",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  
+    CURLOPT_POSTFIELDS =>"{\n  \"carrier_ids\": [\n    \"se-248578\"\n  ],\n  \"from_country_code\": \"US\",\n  \"from_postal_code\": \"78756\",\n  \"to_country_code\": \"US\",\n  \"to_postal_code\": \"90002\",\n  \"weight\": {\n    \"value\": 3,\n    \"unit\": \"ounce\"\n  },\n  \"dimensions\": {\n    \"unit\": \"inch\",\n    \"length\": 15.0,\n    \"width\": 15.0,\n    \"height\": 10.0\n  },\n  \"confirmation\": \"none\",\n  \"address_residential_indicator\": \"no\"\n}",
+  CURLOPT_HTTPHEADER => array(
+    "Host: api.shipengine.com",
+    "API-Key: TEST_SB8LmMvXdJSaNK/S5payf7xun9IjhUQaXmPsX/sz+ZM",
+    "Content-Type: application/json"
+  ),
+));
+  
+  /*
+  CURLOPT_POSTFIELDS =>"{\n  \"carrier_ids\": [\n    \"se-248578\"\n  ],\n  \"from_country_code\": \"US\",\n  \"from_postal_code\": \"78756\",\n  \"to_country_code\": \"".$_GET['country']."\",\n  \"to_postal_code\": \"".$_GET['zipcode']."\",\n  \"weight\": {\n    \"value\": ".$weight_oz.",\n    \"unit\": \"ounce\"\n  },\n  \"dimensions\": {\n    \"unit\": \"inch\",\n    \"length\": 15.0,\n    \"width\": 15.0,\n    \"height\": 10.0\n  },\n  \"confirmation\": \"none\",\n  \"address_residential_indicator\": \"no\"\n}",
+  CURLOPT_HTTPHEADER => array(
+    "Host: api.shipengine.com",
+    "API-Key: TEST_SB8LmMvXdJSaNK/S5payf7xun9IjhUQaXmPsX/sz+ZM",
+    "Content-Type: application/json"
+  ),
+));
+*/
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+
+$arr = json_decode($response, true);
+
+$shippingOptionsString = '';
+
+$i = 0;
+
+foreach($arr as $key=>$value){
+	
+	$shippingOptionsString .= '<tr>
+             <td>
+                 <div class="radio">
+                     <label><input type="radio" class="'.$i.'" value="'.$value['shipping_amount']['amount'].'" onclick="shipping_change('.$i.');" name="optradio">$'.$value['shipping_amount']['amount'].' USD</label>
+                 </div>
+             </td>
+             <td>
+             <div class="radiotext">
+                 <label class="'.$i.'" value="'.$value['service_type'].'" for="regular">'.$value['service_type'].'</label>
+             </div>
+             </td>
+         </tr>';
+		 
+		 $i++;
+}
 ?>
 
 <html>
    <head>
       <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <style>
-body {
-  font-family: Arial;
-  font-size: 17px;
-  padding: 8px;
-  background-color: #fff;
-  color: white;
-}
+	  <link rel="stylesheet" type="text/css" href="payment.css">
+	  <script src="jQuery/jquery-2.1.3.min.js" type="text/javascript"></script>
+	  <script>
+	  
+	  window.onload = function() {
+		  var defaultShippingCost = document.getElementById("shipping_amount").getAttribute("value");
+		  document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(defaultShippingCost) + totalPrice))).toFixed(2) + "USD";
+		};
+		
+		var totalPrice = "<?php echo $_GET['totalPrice'] ?>";
+		totalPrice = totalPrice.substring(0, totalPrice.length - 3);
+		totalPrice = totalPrice.substr(1);
+		totalPrice = parseFloat(totalPrice.replace(/,/g, ''));
 
-* {
-  box-sizing: border-box;
-}
-
-.row {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  margin: 0 -16px;
-}
-
-.col-25 {
-  -ms-flex: 25%; /* IE10 */
-  flex: 25%;
-}
-
-.col-50 {
-  -ms-flex: 50%; /* IE10 */
-  flex: 50%;
-}
-
-.col-75 {
-  -ms-flex: 75%; /* IE10 */
-  flex: 75%;
-}
-
-.col-25,
-.col-50,
-.col-75 {
-  padding: 0 70px;
-}
-
-.image,
-.paypal{
-text-align: center;
-margin-bottom: 10px;
-}
-
-.container {
-  background-color: #222;
-  padding: 5px 20px 15px 20px;
-  border: 1px solid #444;
-  border-radius: 3px;
-}
-
-input[type=text] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-label {
-  margin-bottom: 10px;
-  display: block;
-}
-
-.icon-container {
-  margin-bottom: 20px;
-  padding: 7px 0;
-  font-size: 24px;
-}
-
-.btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  width: 100%;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 17px;
-}
-
-.btn:hover {
-  background-color: #45a049;
-}
-
-a {
-  color: #ddd;
-}
-
-hr {
-  border: 1px solid #444;
-}
-
-span.price {
-  float: right;
-  color: grey;
-}
-
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-@media (max-width: 800px) {
-  .row {
-    flex-direction: column-reverse;
-  }
-  .col-25,
-.col-50,
-.col-75 {
-  padding: 0 16px;
-}
-.image,
-.paypal{
-text-align: center;
-margin-bottom: 10px;
-}
-}
-      </style>
+		function shipping_change(index) {
+			
+			var x = document.getElementsByClassName(index.toString());
+			
+			document.getElementById("shipping_type").innerHTML = x[1].getAttribute("value") + " (Shipping Cost)";
+			document.getElementById("shipping_amount").innerHTML = "$" + x[0].getAttribute("value") + "USD";
+			document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(x[0].getAttribute("value")) + totalPrice))).toFixed(2) + "USD";
+		}
+		
+		</script>
+	  
    </head>
    <body>
       <div class="row">
          <div class="col-25">
-		 <div class="image">
-		 <img src="https://www.avenview.com/purchase/avenview.jpg" alt="Avenview Logo" width="200" height="75" style="margin-bottom: 30px">
+		 <div class="image"> 
+		 
 		 </div>
             <div class="container">
                <?php
@@ -149,19 +108,37 @@ margin-bottom: 10px;
                   
                   for ($x = 0;$x <= count($productPrices);$x++)
                   {
-                  
                       echo "<p><a>" . $productNames[$x] . "</a> <span style=\"color:#dedede\" class='price'>" . $productPrices[$x] . "</span></p>";
-                  
                   }
+				  
+				  echo "<p><a id='shipping_type'>" . $arr[3]['service_type']. " (Shipping Cost)</a> <span style=\"color:#dedede\" value=".$arr[3]['shipping_amount']['amount']." id='shipping_amount' class='price'>$" . $arr[3]['shipping_amount']['amount'] . " USD	</span></p>";
                   
                   ?>
                <hr>
                <?php
-                  echo '<p>Total <span class="price" style="color:#dedede"><b>' . $_GET['totalPrice'] . '</b></span></p>';
+                  echo '<p>Total <span class="price" id="total_cost" style="color:#dedede"><b>' . $_GET['totalPrice'] . '</b></span></p>';
                   ?>
             </div>
 			<div class="paypal" style="margin-top:30px">
-		 <div id="paypal-button-container"></div>
+		 <div id="paypal-button-container"></div> </br></br>
+		 
+		 <?php
+	
+	echo '<table id="customers" class="table table-responsive">
+     <thead>
+         <tr>
+             <th>Price</th>
+             <th>Service</th>
+         </tr>
+     </thead>
+     <tbody>
+     <form id="shipping_cost_form">
+         '.$shippingOptionsString.'
+         </form>
+         </tbody>
+</table>';
+	
+	?>	
 
     <!-- Include the PayPal JavaScript SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=Afg8i2DaO7LJbQvEq2ijhCzp4PWnxdISyrwj2vP3bWTbMe0lHpskFxlkTv4lnnXBUd-fOqByb0Vs9tf3&currency=USD"></script>
@@ -177,6 +154,7 @@ margin-bottom: 10px;
 		
 	echo "<script>
         // Render the PayPal button into #paypal-button-container
+		
         paypal.Buttons({
 			style: {
                 layout: 'horizontal',
@@ -187,10 +165,16 @@ margin-bottom: 10px;
 
             // Set up the transaction
             createOrder: function(data, actions) {
+			var finalShippingcost = document.getElementById('total_cost').innerHTML;
+			
+			finalShippingcost = finalShippingcost.substring(0, finalShippingcost.length - 3);
+			finalShippingcost = finalShippingcost.substr(1);
+			finalShippingcost = parseFloat(finalShippingcost.replace(/,/g, ''));
+			
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '".$totalPriceFloat."'
+                            value: finalShippingcost
                         }
                     }]
                 });
@@ -201,7 +185,7 @@ margin-bottom: 10px;
                 return actions.order.capture().then(function(details) {
                     // Show a success message to the buyer
 					console.log(details);
-					location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ details.id +'&time='+ details.create_time +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.surname +'&productPrices=".$_GET['productPrices']."&productNames=".$_GET['productNames']."&totalPrice=".$_GET['totalPrice']."')
+					location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ details.id +'&time='+ details.create_time +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address + '&totalPrice='+currentPricewithShipping +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.surname +'&productPrices=".$_GET['productPrices']."&productNames=".$_GET['productNames']."')
                 });
             }
 

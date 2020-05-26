@@ -185,7 +185,7 @@ foreach($arr as $key=>$value){
                 return actions.order.capture().then(function(details) {
                     // Show a success message to the buyer
 					console.log(details);
-					location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ details.id +'&time='+ details.create_time +'&time='+ details.create_time +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address + '&totalPrice='+currentPricewithShipping +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.surname +'&productPrices=".$_GET['productPrices']."&productNames=".$_GET['productNames']."')
+					location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ details.id +'&time='+ details.create_time +'&address='+ details.purchase_units[0].shipping.address.address_line_1 +'&state='+ details.purchase_units[0].shipping.address.admin_area_1 +'&city='+ details.purchase_units[0].shipping.address.admin_area_2 +'&country='+ details.purchase_units[0].shipping.address.country_code +'&postal_code='+ details.purchase_units[0].shipping.address.postal_code +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address + '&totalPrice='+ details.purchase_units[0].amount.value +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.surname +'&productPrices=".$_GET['productPrices']."&productNames=".$_GET['productNames']."')
                 });
             }
 
