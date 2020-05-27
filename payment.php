@@ -48,25 +48,15 @@ $i = 0;
 
 foreach($arr as $key=>$value){
 	
-	$shippingOptionsString .= '<tr>
-             <td>
-                 <div class="radio">
-                     <label><input type="radio" class="'.$i.'" value="'.$value['shipping_amount']['amount'].'" onclick="shipping_change('.$i.');" name="optradio">$'.$value['shipping_amount']['amount'].' USD</label>
-                 </div>
-             </td>
-             <td>
-             <div class="radiotext">
-                 <label class="'.$i.'" value="'.$value['service_type'].'" for="regular">'.$value['service_type'].'</label>
-             </div>
-             </td>
-         </tr>';
+	$shippingOptionsString .= '<a onclick="shipping_change('.$i.');">'.$value['shipping_amount']['amount'].' - '.$value['service_type'].'</a>';
 		 
 		 $i++;
 }
 ?>
 
 <html>
-   <head>
+
+	<head>
       <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
     	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,7 +98,12 @@ foreach($arr as $key=>$value){
                   $productPrices = explode("*", $_GET['productPrices']);
                   $productNames = explode("*", $_GET['productNames']);
                   
-                  echo '<h4>Cart <span class="price" style="color:#dedede"><i class="fa fa-shopping-cart"></i> <b>' . (count($productPrices) - 1) . '</b></span></h4>';
+                  echo '<div class="dropdown">
+				  <button class="dropbtn">Shipping Options</button>
+				  <div class="dropdown-content">
+				    '.$shippingOptionsString.'
+				  </div>
+				</div>';
                   
                   for ($x = 0;$x <= count($productPrices);$x++)
                   {
