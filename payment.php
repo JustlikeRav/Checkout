@@ -48,7 +48,7 @@ $i = 0;
 
 foreach($arr as $key=>$value){
 	
-	$shippingOptionsString .= '<a onclick="shipping_change('.$i.');">'.$value['shipping_amount']['amount'].' - '.$value['service_type'].'</a>';
+	$shippingOptionsString .= '<a href="#" class="'.$i.'" onclick="shipping_change('.$i.');">'.$value['shipping_amount']['amount'].' - '.$value['service_type'].'</a>';
 		 
 		 $i++;
 }
@@ -66,7 +66,8 @@ foreach($arr as $key=>$value){
 	  <script>
 	  
 	  window.onload = function() {
-		  var defaultShippingCost = document.getElementById("shipping_amount").getAttribute("value");
+		  var defaultShippingCost = "<?php echo $arr[0]['shipping_amount']['amount'] ?>";
+		  
 		  document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(defaultShippingCost) + totalPrice))).toFixed(2) + "USD";
 		};
 		
@@ -74,14 +75,18 @@ foreach($arr as $key=>$value){
 		totalPrice = totalPrice.substring(0, totalPrice.length - 3);
 		totalPrice = totalPrice.substr(1);
 		totalPrice = parseFloat(totalPrice.replace(/,/g, ''));
+		
+		var javascript_array_string = '<?php echo json_encode($arr);?>';
+		var javascript_array = JSON.parse(javascript_array_string);
+		
 
 		function shipping_change(index) {
 			
 			var x = document.getElementsByClassName(index.toString());
 			
-			document.getElementById("shipping_type").innerHTML = x[1].getAttribute("value") + " (Shipping Cost)";
-			document.getElementById("shipping_amount").innerHTML = "$" + x[0].getAttribute("value") + "USD";
-			document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(x[0].getAttribute("value")) + totalPrice))).toFixed(2) + "USD";
+			document.getElementById("shipping_type").innerHTML = javascript_array[index].service_type + " (Shipping Cost)";
+			document.getElementById("shipping_amount").innerHTML = "$" + javascript_array[index].shipping_amount.amount + "USD";
+			document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(javascript_array[index].shipping_amount.amount) + totalPrice))).toFixed(2) + "USD";
 		}
 		
 		</script>
@@ -120,24 +125,6 @@ foreach($arr as $key=>$value){
             </div>
 			<div class="paypal" style="margin-top:30px">
 		 <div id="paypal-button-container"></div> </br></br>
-		 
-		 <?php
-	
-	echo '<table id="customers" class="table table-responsive">
-     <thead>
-         <tr>
-             <th>Price</th>
-             <th>Service</th>
-         </tr>
-     </thead>
-     <tbody>
-     <form id="shipping_cost_form">
-         '.$shippingOptionsString.'
-         </form>
-         </tbody>
-</table>';
-	
-	?>	
 
     <!-- Include the PayPal JavaScript SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=Afg8i2DaO7LJbQvEq2ijhCzp4PWnxdISyrwj2vP3bWTbMe0lHpskFxlkTv4lnnXBUd-fOqByb0Vs9tf3&currency=USD"></script>
