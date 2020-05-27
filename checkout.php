@@ -295,16 +295,7 @@ div-->
 
       <li class="dropdown pull-right"><a style="padding-top: 7px;" href="https://www.avenview.com/index.php?main_page=shopping_cart" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-shopping-cart"></i><span> Cart</span></a>
         <span class="headerCollapsible collapsed" data-toggle="collapse" data-target="#cart-dd"></span>
-        <div id="cart-dd" class="header-dropdown dropdown-menu collapse">
-          
-<div id="cart-header">
-	<span class="setting-title">Your Shopping Cart Contents</span>
-	<ul class="unstyled nomargin">
-			</ul>
-	<p class="total">Total : $0.00USD</p>
-	<a href="https://www.avenview.com/index.php?main_page=shopping_cart" class="button small">Cart</a>&nbsp;&nbsp;<a href="https://www.avenview.com/index.php?main_page=checkout_shipping" class="button small checkout">Checkout</a>
 
-</div>        </div>
       </li>
       <li class="dropdown pull-right"><a style="padding-top: 7px;" href="/index.php?main_page=login" class="disabled dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span>Setting</span></a>
         <span class="headerCollapsible collapsed" data-toggle="collapse" data-target="#setting-dd"></span>
@@ -458,7 +449,7 @@ div-->
 <section id="mainSection" class="span9" role="main"><!--Main Content-->
 
 
-<iframe id="myFrame" src="https://www.avenview.com/purchase/payment.php?productPrices=null&amp;productNames=null&amp;totalPrice=null" style="height:650px;width:100%" frameborder="0"></iframe>
+<iframe id="myFrame" src="https://www.avenview.com/purchase/payment.php?productPrices=null&amp;productNames=null&amp;totalPrice=null" style="height:850px;width:100%" frameborder="0"></iframe>
 
 <script>
   var url_string = window.location.href;

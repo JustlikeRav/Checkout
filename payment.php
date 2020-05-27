@@ -161,9 +161,7 @@ foreach($arr as $key=>$value){
 		
         paypal.Buttons({
 			style: {
-                layout: 'horizontal',
                 color: 'blue',
-                tagline: 'false',
                 label: 'checkout'
             },
 
