@@ -166,7 +166,7 @@ foreach($arr as $key=>$value){
 	        total: finalShippingcost,
 	        currency: 'USD',
 	        details: {
-	          subtotal: '".$totalPrice."',
+	          subtotal: ".$totalPrice.",
 	          tax: '0',
 	          shipping: ((finalShippingcost-".floatval($totalPrice).").toFixed(2)),
 	          handling_fee: '0',
@@ -180,16 +180,8 @@ foreach($arr as $key=>$value){
 	          {
 	            name: 'hat',
 	            description: 'Brown hat.',
-	            quantity: '5',
-	            price: '3',
-	            tax: '0',
-	            currency: 'USD'
-	          },
-	          {
-	            name: 'handbag',
-	            description: 'Black handbag.',
 	            quantity: '1',
-	            price: '15',
+	            price: '".$totalPrice."',
 	            tax: '0',
 	            currency: 'USD'
 	          }]
