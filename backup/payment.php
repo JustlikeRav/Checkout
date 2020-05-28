@@ -38,6 +38,10 @@ curl_close($curl);
 
 $arr = json_decode($response, true);
 
+usort($arr, function($a, $b) {
+    return $a['shipping_amount']['amount'] <=> $b['shipping_amount']['amount'];
+});
+
 $shippingOptionsString = '';
 
 $i = 0;
@@ -111,7 +115,7 @@ foreach($arr as $key=>$value){
                       echo "<p><a>" . $productNames[$x] . "</a> <span style=\"color:#dedede\" class='price'>" . $productPrices[$x] . "</span></p>";
                   }
 				  
-				  echo "<p><a id='shipping_type'>" . $arr[3]['service_type']. " (Shipping Cost)</a> <span style=\"color:#dedede\" value=".$arr[3]['shipping_amount']['amount']." id='shipping_amount' class='price'>$" . $arr[3]['shipping_amount']['amount'] . " USD	</span></p>";
+				  echo "<p><a id='shipping_type'>" . $arr[0]['service_type']. " (Shipping Cost)</a> <span style=\"color:#dedede\" value=".$arr[3]['shipping_amount']['amount']." id='shipping_amount' class='price'>$" . $arr[0]['shipping_amount']['amount'] . " USD	</span></p>";
                   
                   ?>
                <hr>
@@ -157,9 +161,7 @@ foreach($arr as $key=>$value){
 		
         paypal.Buttons({
 			style: {
-                layout: 'horizontal',
                 color: 'blue',
-                tagline: 'false',
                 label: 'checkout'
             },
 
@@ -185,7 +187,7 @@ foreach($arr as $key=>$value){
                 return actions.order.capture().then(function(details) {
                     // Show a success message to the buyer
 					console.log(details);
-					location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ details.id +'&time='+ details.create_time +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address + '&totalPrice='+currentPricewithShipping +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.surname +'&productPrices=".$_GET['productPrices']."&productNames=".$_GET['productNames']."')
+					location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ details.id +'&time='+ details.create_time +'&address='+ details.purchase_units[0].shipping.address.address_line_1 +'&state='+ details.purchase_units[0].shipping.address.admin_area_1 +'&city='+ details.purchase_units[0].shipping.address.admin_area_2 +'&country='+ details.purchase_units[0].shipping.address.country_code +'&postal_code='+ details.purchase_units[0].shipping.address.postal_code +'&pid='+ details.payer.payer_id + '&email='+details.payer.email_address + '&totalPrice='+ details.purchase_units[0].amount.value +'&name='+ details.payer.name.given_name + ' ' + details.payer.name.surname +'&productPrices=".$_GET['productPrices']."&productNames=".$_GET['productNames']."')
                 });
             }
 

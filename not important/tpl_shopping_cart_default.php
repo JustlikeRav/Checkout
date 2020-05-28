@@ -216,7 +216,7 @@ var country = e.options[e.selectedIndex].value;
 var zipcode = document.getElementById("zipcode").value;
 
 var weight = "<?php echo $weight ?>";
-var productNames = "<?php echo $productNames ?>";
+var productNames = "<?php echo $productNames ?>".split('&').join('and');
 var productPrices = "<?php echo $productPrices ?>";
 var cartShowTotal = "<?php echo $cartShowTotal ?>";
 
