@@ -92,6 +92,7 @@ foreach($arr as $key=>$value){
                <?php
                   $productPrices = explode("*", $_GET['productPrices']);
                   $productNames = explode("*", $_GET['productNames']);
+				  $productQty = explode("*", $_GET['productQty']);
                   
                   echo '<div class="dropdown">
 				  <button class="dropbtn">Shipping Options</button>
@@ -102,7 +103,16 @@ foreach($arr as $key=>$value){
                   
                   for ($x = 0;$x <= count($productPrices);$x++)
                   {
-                      echo "<p><a>" . $productNames[$x] . "</a> <span style=\"color:#dedede\" class='price'>" . $productPrices[$x] . "</span></p>";
+				  	if($productQty[$x]!=""){
+					
+						$productPricesEach = str_replace(",","",$productPrices[$x]);
+						$productPricesEach = str_replace("USD","",$productPricesEach);
+						$productPricesEach = str_replace("$","",$productPricesEach);
+						
+						$totalPriceEachFloat = floatval($productPricesEach)*floatval($productQty[$x]);
+					
+						echo "<p><a>" . $productNames[$x] . " (x".$productQty[$x].")</a> <span style=\"color:#dedede\" class='price'>$" . $totalPriceEachFloat . "USD</span></p>";	
+					}
                   }
 				  
 				  echo "<p><a id='shipping_type'>" . $arr[0]['service_type']. " (Shipping Cost)</a> <span style=\"color:#dedede\" value=".$arr[3]['shipping_amount']['amount']." id='shipping_amount' class='price'>$" . $arr[0]['shipping_amount']['amount'] . " USD	</span></p>";

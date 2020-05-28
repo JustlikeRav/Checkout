@@ -171,7 +171,7 @@ input[type=text], select, textarea {
   foreach ($productArray as $product) {
   
     $productNames = $productNames.$product['productsName']."*";
-    $productPrices = $productPrices.$product['productsPriceEach']."*";
+    $productPrices = $productPrices.$product['productsPrice']."*";
 	
   }
   
