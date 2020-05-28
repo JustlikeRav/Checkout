@@ -4,7 +4,7 @@
 04 / 20
 370
 
-productNames=AVSignCloud%20-%204K%20Digital%20Signage%20Player*&productPrices=$800.00USD*&totalPrice=$800.00USD
+productNames=2X2%20HDMI%202.0%20Video%20Wall%20Processor%20(4K60%2018Gbps,%20IR,%20Audio,%20Rotation)*AVSignCloud%20-%204K%20Digital%20Signage%20Player*&productPrices=$3,995.00USD*$400.00USD*&productQty=1*1*&totalPrice=$4,395.00USD&country=US&zipcode=54165&weight=0.5
 
 https://www.avenview.com/deleteASAP/shipping.php?country=US&weight=0.5&zipcode=72201
 
