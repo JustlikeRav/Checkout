@@ -53,6 +53,7 @@ foreach($arr as $key=>$value){
 		 $i++;
 }
 
+$totalInitialMoney = 0;
 //Creating list array for PayPal checkout
 $List = "";
 ?>
@@ -66,33 +67,6 @@ $List = "";
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	  <link rel="stylesheet" type="text/css" href="payment2.css">
 	  <script src="jQuery/jquery-2.1.3.min.js" type="text/javascript"></script>
-	  <script>
-	  
-	  window.onload = function() {
-		  var defaultShippingCost = "<?php echo $arr[0]['shipping_amount']['amount'] ?>";
-		  
-		  document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(defaultShippingCost) + totalPrice))).toFixed(2) + "USD";
-		};
-		
-		var totalPrice = "<?php echo $_GET['totalPrice'] ?>";
-		totalPrice = totalPrice.substring(0, totalPrice.length - 3);
-		totalPrice = totalPrice.substr(1);
-		totalPrice = parseFloat(totalPrice.replace(/,/g, ''));
-		
-		var javascript_array_string = '<?php echo json_encode($arr);?>';
-		var javascript_array = JSON.parse(javascript_array_string);
-		
-
-		function shipping_change(index) {
-			
-			var x = document.getElementsByClassName(index.toString());
-			
-			document.getElementById("shipping_type").innerHTML = javascript_array[index].service_type + " (Shipping Cost)";
-			document.getElementById("shipping_amount").innerHTML = "$" + javascript_array[index].shipping_amount.amount + "USD";
-			document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(javascript_array[index].shipping_amount.amount) + totalPrice))).toFixed(2) + "USD";
-		}
-		
-		</script>
 	  
    </head>
    <body>
@@ -118,6 +92,9 @@ $List = "";
                   {
 				  	if($productQty[$x]!=""){
 						$totalPriceEachFloat = priceToFloat($productPrices[$x])*floatval($productQty[$x]);
+						
+						//Calculating Total initial money
+						$totalInitialMoney = $totalInitialMoney + $totalPriceEachFloat;
 						
 						echo "<p><a>" . $productNames[$x] . " (x".$productQty[$x].")</a> <span style=\"color:#dedede\" class='price'>$" . sprintf('%0.2f', $totalPriceEachFloat) . "USD</span></p>";
 						
@@ -149,12 +126,36 @@ $List = "";
                   ?>
                <hr>
                <?php
-                  echo '<p>Total <span class="price" id="total_cost" style="color:#dedede"><b>' . $_GET['totalPrice'] . '</b></span></p>';
+                  echo '<p>Total <span class="price" id="total_cost" style="color:#dedede"><b>' . $totalInitialMoney . '</b></span></p>';
                   ?>
             </div>
 			<div class="paypal" style="margin-top:30px">
 		 <div id="paypal-button-container"></div> </br>
 
+<script>
+	  
+	  window.onload = function() {
+		  var defaultShippingCost = "<?php echo $arr[0]['shipping_amount']['amount'] ?>";
+		  
+		  document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(defaultShippingCost) + parseFloat(totalPrice)))).toFixed(2) + "USD";
+		};
+		
+		var totalPrice = "<?php echo $totalInitialMoney ?>";
+		
+		var javascript_array_string = '<?php echo json_encode($arr);?>';
+		var javascript_array = JSON.parse(javascript_array_string);
+		
+
+		function shipping_change(index) {
+			
+			var x = document.getElementsByClassName(index.toString());
+			
+			document.getElementById("shipping_type").innerHTML = javascript_array[index].service_type + " (Shipping Cost)";
+			document.getElementById("shipping_amount").innerHTML = "$" + javascript_array[index].shipping_amount.amount + "USD";
+			document.getElementById("total_cost").innerHTML = "$" + (parseFloat((parseFloat(javascript_array[index].shipping_amount.amount) + parseFloat(totalPrice)))).toFixed(2) + "USD";
+		}
+		
+		</script>
     <!-- Include the PayPal JavaScript SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=Afg8i2DaO7LJbQvEq2ijhCzp4PWnxdISyrwj2vP3bWTbMe0lHpskFxlkTv4lnnXBUd-fOqByb0Vs9tf3&currency=USD"></script>
 	
@@ -190,7 +191,7 @@ $List = "";
 	finalWithShippingcost = finalWithShippingcost.substr(1);
 	finalWithShippingcost = parseFloat(finalWithShippingcost.replace(/,/g, ''));
 	
-	console.log((finalWithShippingcost-".priceToFloat($_GET['totalPrice']).").toFixed(2));
+	console.log((finalWithShippingcost-".priceToFloat($totalInitialMoney).").toFixed(2));
 	
       return actions.payment.create({
         transactions: [{
@@ -198,9 +199,9 @@ $List = "";
 	        total: finalWithShippingcost,
 	        currency: 'USD',
 	        details: {
-	          subtotal: ".priceToFloat($_GET['totalPrice']).",
+	          subtotal: ".priceToFloat($totalInitialMoney).",
 	          tax: '0',
-	          shipping: ((finalWithShippingcost-".priceToFloat($_GET['totalPrice']).").toFixed(2)),
+	          shipping: ((finalWithShippingcost-".priceToFloat($totalInitialMoney).").toFixed(2)),
 	          handling_fee: '0',
 	          shipping_discount: '0',
 	          insurance: '0'
