@@ -1,4 +1,14 @@
 <?php
+function priceToFloat($string) {
+  	$float = str_replace(",","",$string);
+	$float = str_replace("USD","",$float);
+	$float = str_replace("$","",$float);
+    
+  	return floatval($float);
+}
+?>
+
+<?php
 
 $curl = curl_init();
 
@@ -42,6 +52,9 @@ foreach($arr as $key=>$value){
 		 
 		 $i++;
 }
+
+//Creating list array for PayPal checkout
+$List = "";
 ?>
 
 <html>
@@ -104,18 +117,34 @@ foreach($arr as $key=>$value){
                   for ($x = 0;$x <= count($productPrices);$x++)
                   {
 				  	if($productQty[$x]!=""){
-					
-						$productPricesEach = str_replace(",","",$productPrices[$x]);
-						$productPricesEach = str_replace("USD","",$productPricesEach);
-						$productPricesEach = str_replace("$","",$productPricesEach);
+						$totalPriceEachFloat = priceToFloat($productPrices[$x])*floatval($productQty[$x]);
 						
-						$totalPriceEachFloat = floatval($productPricesEach)*floatval($productQty[$x]);
-					
-						echo "<p><a>" . $productNames[$x] . " (x".$productQty[$x].")</a> <span style=\"color:#dedede\" class='price'>$" . $totalPriceEachFloat . "USD</span></p>";	
+						echo "<p><a>" . $productNames[$x] . " (x".$productQty[$x].")</a> <span style=\"color:#dedede\" class='price'>$" . sprintf('%0.2f', $totalPriceEachFloat) . "USD</span></p>";
+						
+						//Creating list array for PayPal checkout
+						if($x==0){
+							$List = "{
+				            name: '".$productNames[$x]."',
+				            description: '',
+				            quantity: '".$productQty[$x]."',
+				            price: '".sprintf('%0.2f', $productPrices[$x])."',
+				            tax: '0',
+				            currency: 'USD'
+				          }";
+						}else{
+							$List = $List.",{
+				            name: '".$productNames[$x]."',
+				            description: '',
+				            quantity: '".$productQty[$x]."',
+				            price: '".sprintf('%0.2f', $productPrices[$x])."',
+				            tax: '0',
+				            currency: 'USD'
+				          }";
+						}
 					}
                   }
 				  
-				  echo "<p><a id='shipping_type'>" . $arr[0]['service_type']. " (Shipping Cost)</a> <span style=\"color:#dedede\" value=".$arr[3]['shipping_amount']['amount']." id='shipping_amount' class='price'>$" . $arr[0]['shipping_amount']['amount'] . " USD	</span></p>";
+				  echo "<p><a id='shipping_type'>" . $arr[0]['service_type']. " (Shipping Cost)</a> <span style=\"color:#dedede\" value=".$arr[3]['shipping_amount']['amount']." id='shipping_amount' class='price'>$" . $arr[0]['shipping_amount']['amount'] . "USD</span></p>";
                   
                   ?>
                <hr>
@@ -130,13 +159,6 @@ foreach($arr as $key=>$value){
     <script src="https://www.paypal.com/sdk/js?client-id=Afg8i2DaO7LJbQvEq2ijhCzp4PWnxdISyrwj2vP3bWTbMe0lHpskFxlkTv4lnnXBUd-fOqByb0Vs9tf3&currency=USD"></script>
 	
 	<?php
-	$totalPrice = str_replace(",","",$_GET['totalPrice']);
-	$totalPrice = str_replace("USD","",$totalPrice);
-	$totalPrice = str_replace("$","",$totalPrice);
-	
-	$totalPriceFloat = floatval($totalPrice);
-	
-		//echo floatval($string)
 		
 	echo "<div id='paypal-button'></div>
 <script src='https://www.paypalobjects.com/api/checkout.js'></script>
@@ -162,39 +184,32 @@ foreach($arr as $key=>$value){
 
     // Set up a payment
     payment: function(data, actions) {
-	var finalShippingcost = document.getElementById('total_cost').innerHTML;
+	var finalWithShippingcost = document.getElementById('total_cost').innerHTML;
 			
-	finalShippingcost = finalShippingcost.substring(0, finalShippingcost.length - 3);
-	finalShippingcost = finalShippingcost.substr(1);
-	finalShippingcost = parseFloat(finalShippingcost.replace(/,/g, ''));
+	finalWithShippingcost = finalWithShippingcost.substring(0, finalWithShippingcost.length - 3);
+	finalWithShippingcost = finalWithShippingcost.substr(1);
+	finalWithShippingcost = parseFloat(finalWithShippingcost.replace(/,/g, ''));
 	
-	console.log((finalShippingcost-".floatval($totalPrice).").toFixed(2));
+	console.log((finalWithShippingcost-".priceToFloat($_GET['totalPrice']).").toFixed(2));
 	
       return actions.payment.create({
         transactions: [{
 	      amount: {
-	        total: finalShippingcost,
+	        total: finalWithShippingcost,
 	        currency: 'USD',
 	        details: {
-	          subtotal: ".$totalPrice.",
+	          subtotal: ".priceToFloat($_GET['totalPrice']).",
 	          tax: '0',
-	          shipping: ((finalShippingcost-".floatval($totalPrice).").toFixed(2)),
+	          shipping: ((finalWithShippingcost-".priceToFloat($_GET['totalPrice']).").toFixed(2)),
 	          handling_fee: '0',
 	          shipping_discount: '0',
 	          insurance: '0'
 	        }
 	        },
-	        description: 'The payment transaction description. kjsdnfkjsdbfjkbsdkjfbksjdbfkjsdbfkjbsdkjfbkjsdbfkjsbdkjfbsdkjbfkjsdbkjfbsdkjbfkjsdbfkjsdbfkjbsdkjfbksdbfksdbkjfbskjfbs',
+	        description: 'The payment transaction description.',
 	        item_list: {
 	          items: [
-	          {
-	            name: 'hat',
-	            description: 'Brown hat.',
-	            quantity: '1',
-	            price: '".$totalPrice."',
-	            tax: '0',
-	            currency: 'USD'
-	          }]
+	          ".$List."]
 	        }
       }]
       });
