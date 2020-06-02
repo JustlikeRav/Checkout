@@ -10,6 +10,8 @@ https://www.avenview.com/deleteASAP/shipping.php?country=US&weight=0.5&zipcode=7
 
 /public_html/includes/templates/exodus/templates/
 
+for success: ?id=EC-48572381UJ7599109&totalPrice=$5020.27USD&email=ravneetsngh6@gmail.com&productPrices=$400.00USD*$2,999.00USD*&productNames=AVSignCloud%20-%204K%20Digital%20Signage%20Player*4K30%20Video%20Wall%20Processor%20with%20Customizable%20Layout%20Shapes*
+
 )Y3{@%DMc&_t
 
 

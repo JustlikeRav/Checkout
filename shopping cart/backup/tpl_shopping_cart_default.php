@@ -168,7 +168,6 @@ input[type=text], select, textarea {
   
   $productNames;
   $productPrices;
-  
   foreach ($productArray as $product) {
   
     $productNames = $productNames.$product['productsName']."*";

@@ -449,7 +449,7 @@ div-->
 <section id="mainSection" class="span9" role="main"><!--Main Content-->
 
 
-<iframe id="myFrame" src="https://www.avenview.com/deleteASAP/payment2.php?productPrices=null&amp;productNames=null&amp;totalPrice=null" style="height:850px;width:100%" frameborder="0"></iframe>
+<iframe id="myFrame" src="https://www.avenview.com/purchase/payment.php?productPrices=null&amp;productNames=null&amp;totalPrice=null" style="height:850px;width:100%" frameborder="0"></iframe>
 
 <script>
   var url_string = window.location.href;
@@ -458,8 +458,11 @@ div-->
   var productNames = url.searchParams.get("productNames");
   var totalPrice = url.searchParams.get("totalPrice");
   var weight = url.searchParams.get("weight");
+  var productQty = url.searchParams.get("productQty");
+  var email = url.searchParams.get("email");
+  var productPricesTimesQty = url.searchParams.get("productPricesTimesQty");
   
-  document.getElementById("myFrame").src = "https://www.avenview.com/deleteASAP/payment2.php?productPrices="+productPrices+"&productNames="+productNames+"&totalPrice="+totalPrice+"&weight="+weight;
+  document.getElementById("myFrame").src = "https://www.avenview.com/purchase/payment.php?productPrices="+productPrices+"&productNames="+productNames+"&totalPrice="+totalPrice+"&weight="+weight+"&productQty="+productQty+"&email="+email+"&productPricesTimesQty="+productPricesTimesQty;
 </script>
 
 </section><!--Main Content-->

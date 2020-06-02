@@ -216,7 +216,7 @@ var country = e.options[e.selectedIndex].value;
 var zipcode = document.getElementById("zipcode").value;
 
 var weight = "<?php echo $weight ?>";
-var productNames = "<?php echo $productNames ?>";
+var productNames = "<?php echo $productNames ?>".split('&').join('and');
 var productPrices = "<?php echo $productPrices ?>";
 var cartShowTotal = "<?php echo $cartShowTotal ?>";
 
@@ -241,14 +241,14 @@ window.location.href = 'https://www.avenview.com/purchase/checkout.php?productNa
 <div class="buttonRow back"><?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_CONTINUE_SHOPPING, BUTTON_CONTINUE_SHOPPING_ALT) . '</a>'; ?></div>
 <?php
 // show update cart button
-  if (SHOW_SHOPPING_CART_UPDATE == 2 or SHOW_SHOPPING_CART_UPDATE == 3) {
+  //if (SHOW_SHOPPING_CART_UPDATE == 2 or SHOW_SHOPPING_CART_UPDATE == 3) {
 ?>
-<div class="buttonRow back"><button class="button cartUpdate" type="submit"><i class="icon-refresh"></i> <?php echo TEXT_UPDATE; ?></button></div>
+<!--div class="buttonRow back"><button class="button cartUpdate" type="submit"><i class="icon-refresh"></i> <?php echo TEXT_UPDATE; ?></button></div-->
 <?php
-  } else { // don't show update button below cart
+  //} else { // don't show update button below cart
 ?>
 <?php
-  } // show update button
+  //} // show update button
 ?>
 <!--eof shopping cart buttons-->
 </form>
