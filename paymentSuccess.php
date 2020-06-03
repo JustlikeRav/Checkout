@@ -270,7 +270,7 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 // More headers
 $headers .= 'From: Avenview Inc.<no-reply@avenview.com>' . "\r\n";
-$headers .= 'Bcc: ravneet@avenview.com' . "\r\n";
+$headers .= 'Bcc: info@avenview.com' . "\r\n";
 
 // send email
 mail($to,$subject,$emailReceipt,$headers);
