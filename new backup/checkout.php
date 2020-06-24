@@ -461,11 +461,8 @@ div-->
   var productQty = url.searchParams.get("productQty");
   var email = url.searchParams.get("email");
   var productPricesTimesQty = url.searchParams.get("productPricesTimesQty");
-  var province = url.searchParams.get("province");
-  var country = url.searchParams.get("country");
-  var zipcode = url.searchParams.get("zipcode");
   
-  document.getElementById("myFrame").src = "https://www.avenview.com/purchase/payment.php?productPrices="+productPrices+"&productNames="+productNames+"&totalPrice="+totalPrice+"&weight="+weight+"&productQty="+productQty+"&province="+province+"&country="+country+"&zipcode="+zipcode+"&email="+email+"&productPricesTimesQty="+productPricesTimesQty;
+  document.getElementById("myFrame").src = "https://www.avenview.com/purchase/payment.php?productPrices="+productPrices+"&productNames="+productNames+"&totalPrice="+totalPrice+"&weight="+weight+"&productQty="+productQty+"&email="+email+"&productPricesTimesQty="+productPricesTimesQty;
 </script>
 
 </section><!--Main Content-->
