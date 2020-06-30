@@ -41,6 +41,17 @@ curl_close($curl);
 
 $arr = json_decode($response, true);
 
+if($arr['errors'][0]['field_name'] == "to_postal_code"){
+
+	echo '<script language="javascript">';
+	echo "if (confirm('Zipcode is Invalid')) {
+		  window.top.location.href = 'https://www.avenview.com/index.php?main_page=shopping_cart';;
+		} else {
+		  window.top.location.href = 'https://www.avenview.com/index.php?main_page=shopping_cart';;
+		}";
+	echo '</script>';
+}
+
 usort($arr, function($a, $b) {
     return $a['shipping_amount']['amount'] <=> $b['shipping_amount']['amount'];
 });
