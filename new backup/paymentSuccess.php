@@ -262,8 +262,6 @@ $emailReceipt = '<div dir="ltr">
 $msg = wordwrap($emailReceipt,70);
 
 $to = $_GET['email'];
-
-
 $subject = "Purchase Receipt - Avenview Inc.";
 
 // Always set content-type when sending HTML email
@@ -272,7 +270,7 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 // More headers
 $headers .= 'From: Avenview Inc.<no-reply@avenview.com>' . "\r\n";
-$headers .= 'Bcc: sales@avenview.com' . "\r\n";
+$headers .= 'Bcc: info@avenview.com' . "\r\n";
 
 // send email
 mail($to,$subject,$emailReceipt,$headers);
@@ -280,6 +278,7 @@ mail($to,$subject,$emailReceipt,$headers);
 
 
 <?php
+/*
 // Saving payment in Zencart backend
 $servername = "localhost";
 $username = "avenview_paypal";
@@ -293,18 +292,15 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "INSERT INTO `orders` (`orders_id`, `customers_id`, `customers_name`, `customers_company`, `customers_street_address`, `customers_suburb`, `customers_city`, `customers_postcode`, `customers_state`, `customers_country`, `customers_telephone`, `customers_email_address`, `customers_address_format_id`, `delivery_name`, `delivery_company`, `delivery_street_address`, `delivery_suburb`, `delivery_city`, `delivery_postcode`, `delivery_state`, `delivery_country`, `delivery_address_format_id`, `billing_name`, `billing_company`, `billing_street_address`, `billing_suburb`, `billing_city`, `billing_postcode`, `billing_state`, `billing_country`, `billing_address_format_id`, `payment_method`, `payment_module_code`, `shipping_method`, `shipping_module_code`, `coupon_code`, `cc_type`, `cc_owner`, `cc_number`, `cc_expires`, `cc_cvv`, `last_modified`, `date_purchased`, `orders_status`, `orders_date_finished`, `currency`, `currency_value`, `order_total`, `order_tax`, `paypal_ipn_id`, `ip_address`, `mycourier_name`, `mycourier_account`) VALUES (NULL, '".$_GET['pid']."', '".$_GET['name']."', 'NA', '".$_GET['address']."', NULL, '".$_GET['address']."', '".$_GET['postal_code']."', '".$_GET['state']."', '".$_GET['country']."', 'test_telephone', '".$_GET['email']."', '0', 'UPS', 'United Parcel Service', '".$_GET['address']."', NULL, '".$_GET['address']."', '".$_GET['postal_code']."', '".$_GET['state']."', '".$_GET['country']."', '0', '', NULL, '".$_GET['address']."', NULL, '".$_GET['address']."', '".$_GET['postal_code']."', '".$_GET['state']."', '".$_GET['country']."', '0', 'PayPal', '', 'TestShippingMethod', '', '', NULL, NULL, NULL, NULL, NULL, NULL, '".$_GET['time']."', '0', NULL, 'USD', NULL, '".$_GET['totalPrice']."', '0', '0', '', NULL, NULL);";
+$sql = "INSERT INTO `orders` (`orders_id`, `customers_id`, `customers_name`, `customers_company`, `customers_street_address`, `customers_suburb`, `customers_city`, `customers_postcode`, `customers_state`, `customers_country`, `customers_telephone`, `customers_email_address`, `customers_address_format_id`, `delivery_name`, `delivery_company`, `delivery_street_address`, `delivery_suburb`, `delivery_city`, `delivery_postcode`, `delivery_state`, `delivery_country`, `delivery_address_format_id`, `billing_name`, `billing_company`, `billing_street_address`, `billing_suburb`, `billing_city`, `billing_postcode`, `billing_state`, `billing_country`, `billing_address_format_id`, `payment_method`, `payment_module_code`, `shipping_method`, `shipping_module_code`, `coupon_code`, `cc_type`, `cc_owner`, `cc_number`, `cc_expires`, `cc_cvv`, `last_modified`, `date_purchased`, `orders_status`, `orders_date_finished`, `currency`, `currency_value`, `order_total`, `order_tax`, `paypal_ipn_id`, `ip_address`, `mycourier_name`, `mycourier_account`) VALUES (NULL, '".$_GET['pid']."', '".$_GET['name']."', 'NA', '".$_GET['address']."', NULL, '".$_GET['address']."', '".$_GET['postal_code']."', '".$_GET['state']."', '".$_GET['country']."', 'test_telephone', '".$_GET['email']."', '0', 'UPS', 'United Parcel Service', '".$_GET['address']."', NULL, '".$_GET['address']."', '".$_GET['postal_code']."', '".$_GET['state']."', '".$_GET['country']."', '0', '', NULL, '".$_GET['address']."', NULL, '".$_GET['address']."', '".$_GET['postal_code']."', '".$_GET['state']."', '".$_GET['country']."', '0', 'PayPal', '', 'TestShippingMethod', '', '', NULL, NULL, NULL, NULL, NULL, NULL, '".$_GET['time']."', '0', NULL, 'USD', NULL, '".$_GET['totalPrice']."', '0', '0', '', NULL, NULL)";
 
-$piecesNames = explode(" ", $_GET['name']);
-
-$sql .= "INSERT INTO `customers` (`customers_id`, `customers_gender`, `customers_firstname`, `customers_lastname`, `customers_dob`, `customers_email_address`, `customers_nick`, `customers_default_address_id`, `customers_telephone`, `customers_fax`, `customers_password`, `customers_newsletter`, `customers_group_pricing`, `customers_email_format`, `customers_authorization`, `customers_referral`) VALUES (NULL, 'm', '".$piecesNames[0]."', '".$piecesNames[1]."', '0001-01-01 00:00:00.000000', '".$_GET['email']."', '', '0', '', NULL, '', NULL, '0', 'TEXT', '0', '')";
-
-if ($conn->multi_query($sql) === TRUE) {
+if ($conn->query($sql) === TRUE) {
+  echo "New record created successfully";
 } else {
-  error_log("Error: " . $sql . " -- " . $conn->error, 0);
+  echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-$conn->close();
+$conn->close();*/
 ?>
 
 
