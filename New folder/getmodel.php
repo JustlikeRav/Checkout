@@ -25,7 +25,14 @@ for ($x = 0;$x < count($productIDs);$x++){
 	}
 }
 
-$sql = $sql.")";
+$sql = $sql.")ORDER BY CASE `products_id`";
+
+for ($x = 0;$x < count($productIDs);$x++){
+	if(strlen($productIDs[$x]) == 0) continue;
+		$sql = $sql." WHEN ".$productIDs[$x]." THEN ".($x+1);
+}
+
+$sql = $sql." END";
 
 $result = $conn->query($sql);
 

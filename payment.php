@@ -10,7 +10,7 @@ function priceToFloat($string) {
 
 <?php
 
-$productModelsConcat = file_get_contents('https://www.avenview.com/deleteASAP/getmodel.php?product_ids='.$_GET['productIds']);
+$productModelsConcat = file_get_contents('https://www.avenview.com/purchase/getmodel.php?product_ids='.$_GET['productIds']);
 
 $curl = curl_init();
 
