@@ -1,7 +1,3 @@
-<!DOCTYPE html>
-<html>
-<body>
-
 <?php
 $servername = "localhost";
 $username = "avenview_getmodel";
@@ -15,19 +11,32 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT `products_model` FROM `products` WHERE `products_id` in (1677,484)";
+$productIDs = explode("*", $_GET['product_ids']);
+
+$sql = "SELECT `products_model` FROM `products` WHERE `products_id` in (";
+
+for ($x = 0;$x < count($productIDs);$x++){
+	if($x == 0){
+		if(strlen($productIDs[$x]) == 0) continue;
+		$sql = $sql."".$productIDs[$x]."";
+	} else {
+		if(strlen($productIDs[$x]) == 0) continue;
+		$sql = $sql.",".$productIDs[$x]."";
+	}
+}
+
+$sql = $sql.")";
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-	$array=array();
+	$response;
   // output data of each row
   while($row = $result->fetch_assoc()) {
-	array_push($array, $row["products_model"]);
+	$response=$response."*".$row["products_model"];
   }
-  
-  $myJSON = json_encode(array_values($array));
 
-  echo $myJSON;
+  echo substr($response, 1);
   
 } else {
   echo "0 results";
@@ -35,6 +44,3 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 ?>
-
-</body>
-</html>

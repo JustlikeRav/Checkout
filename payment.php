@@ -10,6 +10,8 @@ function priceToFloat($string) {
 
 <?php
 
+$productModelsConcat = file_get_contents('https://www.avenview.com/deleteASAP/getmodel.php?product_ids='.$_GET['productIds']);
+
 $curl = curl_init();
 
 $weight_oz = ((float) $_GET['weight'])*16;
@@ -92,7 +94,7 @@ $List = "";
             <div class="container">
                <?php
                   $productPrices = explode("*", $_GET['productPrices']);
-                  $productNames = explode("*", $_GET['productNames']);
+                  $productModels = explode("*", $productModelsConcat);
 				  $productQty = explode("*", $_GET['productQty']);
                   
                   echo '<div class="dropdown">
@@ -110,12 +112,12 @@ $List = "";
 						//Calculating Total initial money
 						$totalInitialMoney = $totalInitialMoney + $totalPriceEachFloat;
 						
-						echo "<p><a>" . $productNames[$x] . " (x".$productQty[$x].")</a> <span style=\"color:#dedede\" class='price'>$" . sprintf('%0.2f', $totalPriceEachFloat) . "USD</span></p>";
+						echo "<p><a>" . $productModels[$x] . " (x".$productQty[$x].")</a> <span style=\"color:#dedede\" class='price'>$" . sprintf('%0.2f', $totalPriceEachFloat) . "USD</span></p>";
 						
 						//Creating list array for PayPal checkout
 						if($x==0){
 							$List = "{
-				            name: '".$productNames[0]."',
+				            name: '".$productModels[0]."',
 				            description: '',
 				            quantity: '".$productQty[0]."',
 				            price: '".priceToFloat($productPrices[0])."',
@@ -125,7 +127,7 @@ $List = "";
 				          }";
 						}else{
 							$List = $List.",{
-				            name: '".$productNames[$x]."',
+				            name: '".$productModels[$x]."',
 				            description: '',
 				            quantity: '".$productQty[$x]."',
 				            price: '".priceToFloat($productPrices[$x])."',
@@ -250,7 +252,7 @@ $List = "";
 	  finalWithShippingcost = parseFloat(finalWithShippingcost.replace(/,/g, ''));
 	  
         // Show a confirmation message to the buyer
-        location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ data.orderID +'&totalPrice=$' + currentTotalPrice + 'USD&email=".$_GET['email']."&shipping=' + ((finalWithShippingcost-".priceToFloat($totalInitialMoney).").toFixed(2)) + '&productPrices=".$_GET['productPricesTimesQty']."&productQty=".$_GET['productQty']."&productNames=".str_replace(' ', '%20', $_GET['productNames'])."')
+        location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ data.orderID +'&totalPrice=$' + currentTotalPrice + 'USD&email=".$_GET['email']."&shipping=' + ((finalWithShippingcost-".priceToFloat($totalInitialMoney).").toFixed(2)) + '&productPrices=".$_GET['productPricesTimesQty']."&productQty=".$_GET['productQty']."&productModels=".str_replace(' ', '%20', $productModelsConcat)."')
       });
     }
   }, '#paypal-button');
