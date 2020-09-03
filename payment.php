@@ -29,7 +29,7 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
   
-    CURLOPT_POSTFIELDS =>"{\n  \"carrier_ids\": [\n    \"se-274396\"\n  ],\n  \"from_country_code\": \"CA\",\n  \"from_postal_code\": \"L3R 3B1\",\n  \"to_country_code\": \"".$_GET['country']."\",\n  \"to_state_province\": \"".$_GET['province']."\",\n  \"to_postal_code\": \"".$_GET['zipcode']."\",\n  \"weight\": {\n    \"value\": ".$weight_oz.",\n    \"unit\": \"ounce\"\n  },\n  \"dimensions\": {\n    \"unit\": \"inch\",\n    \"length\": 15.0,\n    \"width\": 15.0,\n    \"height\": 10.0\n  },\n  \"confirmation\": \"none\",\n  \"address_residential_indicator\": \"no\"\n}",
+    CURLOPT_POSTFIELDS =>"{\n  \"carrier_ids\": [\n    \"se-274396\"\n  ],\n  \"from_country_code\": \"US\",\n  \"from_postal_code\": \"78756\",\n  \"to_country_code\": \"".$_GET['country']."\",\n  \"to_state_province\": \"".$_GET['province']."\",\n  \"to_postal_code\": \"".$_GET['zipcode']."\",\n  \"weight\": {\n    \"value\": ".$weight_oz.",\n    \"unit\": \"ounce\"\n  },\n  \"dimensions\": {\n    \"unit\": \"inch\",\n    \"length\": 20.0,\n    \"width\": 20.0,\n    \"height\": 15.0\n  },\n  \"confirmation\": \"none\",\n  \"address_residential_indicator\": \"no\"\n}",
   CURLOPT_HTTPHEADER => array(
     "Host: api.shipengine.com",
     "API-Key: ".$p,
@@ -61,6 +61,16 @@ usort($arr, function($a, $b) {
 $shippingOptionsString = '';
 
 $i = 0;
+
+$totalPrice1 = trim($_GET['totalPrice'],'$USD');
+$totalPrice1 = str_replace( ',', '', $totalPrice1 );
+
+if($totalPrice1 > 680.00){
+	for ($i = 0; $i < count($arr); $i++) {
+		$arr[$i]['shipping_amount']['amount'] = $arr[$i]['shipping_amount']['amount']*1.81;
+	}
+}
+
 
 foreach($arr as $key=>$value){
 	
