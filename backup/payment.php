@@ -16,6 +16,8 @@ $curl = curl_init();
 
 $weight_oz = ((float) $_GET['weight'])*16;
 
+if($weight_oz < 1) $weight_oz = 1;
+
 $p = "F1mmxiSJHLlzVJFJklHNB0qhfuvd1US/L1AKauUEgzk";
 $s = "TEST_SB8LmMvXdJSaNK/S5payf7xun9IjhUQaXmPsX/sz+ZM";
 
@@ -24,12 +26,12 @@ curl_setopt_array($curl, array(
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
+  CURLOPT_TIMEOUT => 10,
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
   
-    CURLOPT_POSTFIELDS =>"{\n  \"carrier_ids\": [\n    \"se-274396\"\n  ],\n  \"from_country_code\": \"US\",\n  \"from_postal_code\": \"78756\",\n  \"to_country_code\": \"".$_GET['country']."\",\n  \"to_state_province\": \"".$_GET['province']."\",\n  \"to_postal_code\": \"".$_GET['zipcode']."\",\n  \"weight\": {\n    \"value\": ".$weight_oz.",\n    \"unit\": \"ounce\"\n  },\n  \"dimensions\": {\n    \"unit\": \"inch\",\n    \"length\": 15.0,\n    \"width\": 15.0,\n    \"height\": 10.0\n  },\n  \"confirmation\": \"none\",\n  \"address_residential_indicator\": \"no\"\n}",
+    CURLOPT_POSTFIELDS =>"{\n  \"carrier_ids\": [\n    \"se-274396\"\n  ],\n  \"from_country_code\": \"US\",\n  \"from_postal_code\": \"78756\",\n  \"to_country_code\": \"".$_GET['country']."\",\n  \"to_state_province\": \"".$_GET['province']."\",\n  \"to_postal_code\": \"".$_GET['zipcode']."\",\n  \"weight\": {\n    \"value\": ".$weight_oz.",\n    \"unit\": \"ounce\"\n  },\n  \"dimensions\": {\n    \"unit\": \"inch\",\n    \"length\": 20.0,\n    \"width\": 20.0,\n    \"height\": 15.0\n  },\n  \"confirmation\": \"none\",\n  \"address_residential_indicator\": \"no\"\n}",
   CURLOPT_HTTPHEADER => array(
     "Host: api.shipengine.com",
     "API-Key: ".$p,
@@ -61,6 +63,16 @@ usort($arr, function($a, $b) {
 $shippingOptionsString = '';
 
 $i = 0;
+
+$totalPrice1 = trim($_GET['totalPrice'],'$USD');
+$totalPrice1 = str_replace( ',', '', $totalPrice1 );
+
+if($totalPrice1 > 680.00){
+	for ($i = 0; $i < count($arr); $i++) {
+		$arr[$i]['shipping_amount']['amount'] = number_format((float)$arr[$i]['shipping_amount']['amount']*1.81, 2, '.', '');
+	}
+}
+
 
 foreach($arr as $key=>$value){
 	
@@ -252,7 +264,7 @@ $List = "";
 	  finalWithShippingcost = parseFloat(finalWithShippingcost.replace(/,/g, ''));
 	  
         // Show a confirmation message to the buyer
-        location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ data.orderID +'&totalPrice=$' + currentTotalPrice + 'USD&email=".$_GET['email']."&shipping=' + ((finalWithShippingcost-".priceToFloat($totalInitialMoney).").toFixed(2)) + '&productPrices=".$_GET['productPricesTimesQty']."&productQty=".$_GET['productQty']."&productModels=".str_replace(' ', '%20', $productModelsConcat)."')
+        location.replace('https://www.avenview.com/purchase/paymentSuccess.php?id='+ data.orderID +'&totalPrice=$' + currentTotalPrice + 'USD&email=".$_GET['email']."&shipping=' + ((finalWithShippingcost-".priceToFloat($totalInitialMoney).").toFixed(2)) + '&productPrices=".$_GET['productPricesTimesQty']."&productQty=".$_GET['productQty']."&productModels=".str_replace(' ', '%20', $productModelsConcat)."&productNames=".$_GET['productNames']."')
       });
     }
   }, '#paypal-button');

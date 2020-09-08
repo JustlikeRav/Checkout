@@ -16,6 +16,10 @@ $productIDs = explode("*", $_GET['product_ids']);
 $sql = "SELECT `products_model` FROM `products` WHERE `products_id` in (";
 
 for ($x = 0;$x < count($productIDs);$x++){
+	if( strpos($productIDs[$x], ':') !== false ) {
+		$productIDs[$x] = substr($productIDs[$x], 0, strpos($productIDs[$x], ':'));
+	}
+	
 	if($x == 0){
 		if(strlen($productIDs[$x]) == 0) continue;
 		$sql = $sql."".$productIDs[$x]."";

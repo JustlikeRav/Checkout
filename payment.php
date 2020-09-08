@@ -67,7 +67,7 @@ $i = 0;
 $totalPrice1 = trim($_GET['totalPrice'],'$USD');
 $totalPrice1 = str_replace( ',', '', $totalPrice1 );
 
-if($totalPrice1 > 680.00){
+if($totalPrice1 > 250.00){
 	for ($i = 0; $i < count($arr); $i++) {
 		$arr[$i]['shipping_amount']['amount'] = number_format((float)$arr[$i]['shipping_amount']['amount']*1.81, 2, '.', '');
 	}

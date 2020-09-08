@@ -218,7 +218,8 @@ $emailReceipt = '<div dir="ltr">
                         </tr>
                         <tr style="font-size: 18px; line-height: 24px;">
                           <td>
-                            <span id="gmail-lblThankYouHtml" class="gmail-emailLink">Thank you.</span>
+                            <span id="gmail-lblThankYouHtml" class="gmail-emailLink">Thank you.</span><br><br>
+                            <p style="font-family: 'Courier New', Courier, monospace;">$_GET['productNames']</p>
                           </td>
                         </tr>
                       </tbody>
