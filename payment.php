@@ -73,7 +73,7 @@ if($totalPrice1 > 250.00){
 	}
 }
 
-
+$i=0;
 foreach($arr as $key=>$value){
 	
 	$shippingOptionsString .= '<a href="#" class="'.$i.'" onclick="shipping_change('.$i.');">'.$value['shipping_amount']['amount'].' - '.$value['service_type'].'</a>';
@@ -243,7 +243,7 @@ $List = "";
 	          insurance: '0'
 	        }
 	        },
-	        description: 'The payment transaction description.',
+	        description: document.getElementById('shipping_type'),
 	        item_list: {
 	          items: [
 	          ".$List."]
