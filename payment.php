@@ -227,8 +227,6 @@ $List = "";
 	finalWithShippingcost = finalWithShippingcost.substr(1);
 	finalWithShippingcost = parseFloat(finalWithShippingcost.replace(/,/g, ''));
 	
-	console.log((finalWithShippingcost-".priceToFloat($totalInitialMoney).").toFixed(2));
-	
       return actions.payment.create({
         transactions: [{
 	      amount: {
@@ -243,7 +241,7 @@ $List = "";
 	          insurance: '0'
 	        }
 	        },
-	        description: document.getElementById('shipping_type'),
+	        description: '' + document.getElementById('shipping_type').innerHTML + '',
 	        item_list: {
 	          items: [
 	          ".$List."]
